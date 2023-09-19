@@ -1,0 +1,42 @@
+.card-body  {
+    background-color:#F9F3F2 ;
+     cursor: pointer;
+     box-shadow:  rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+    }
+    
+    .flex-row-reverse> span{
+        color:  #23AA49;
+        font-weight: 500;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .col> span{
+        color:solid black;
+        font-weight: 500;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .d-flex > button {
+        outline: none;
+        border: none;
+        color: white;
+        background-color:#23AA49;
+        padding: 4px 8px;
+        margin: 5px 5px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 18px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .d-flex > button:hover{
+        background-color: #23AA49;
+        color: white;
+    }
+
+  .link-tag{
+    text-decoration: none;
+  }

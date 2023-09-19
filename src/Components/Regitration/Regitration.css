@@ -1,0 +1,15 @@
+.register-password.ErrorMessage{
+   display: flex;
+   align-items: flex-start;
+   justify-content: flex-start;
+}
+
+.logincard-bg {
+    background-image: url('../images/loginbg.jfif');
+    width: 100%;
+}
+
+
+.link-tag{
+    text-decoration: none;   
+}

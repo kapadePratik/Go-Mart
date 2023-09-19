@@ -1,0 +1,88 @@
+.logincard-bg {
+    background-color: #E8EAFE ;
+    border-radius: 13px;
+}
+
+.signin-btn{
+    background-color: #23AA49;
+    height: 3rem;
+    width: 5vw;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+.signin-btn:hover {
+    background-color: #23AA49;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.placeholder{
+    background-color: white;
+}
+
+.placeholder::placeholder {
+ color:black;
+ font-size: 18px;
+ font-weight: 500;
+}
+
+.signin-input>input {
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+}
+
+.signin-input>span {
+    box-shadow:5px 5px 5px 0px rgba(0,0,0,0.3) ;
+}
+
+
+
+
+.input-group-text span{
+    color: #23AA49;
+    
+}
+
+.forgot-password  {
+    color: #23AA49;
+}
+
+.sign-inforgot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #23AA49;
+    
+}
+
+.signin-icon span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 55px;
+}
+
+.signin-icon-text{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.signin-icon-text p {
+    color: #23AA49;
+}
+
+.signin-icon-text span {
+    color: #1D2348;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.link-tag  {
+    text-decoration: none;
+}
+

@@ -1,0 +1,11 @@
+.dropdown-content{
+  color: gray;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.link-tag-card{
+  text-decoration: none;
+  outline: none;
+  color: black;
+}

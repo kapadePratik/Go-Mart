@@ -1,0 +1,18 @@
+.card-body  {
+background-color:#F9F3F2 ;
+ cursor: pointer;
+}
+
+.flex-row-reverse> span{
+    color:  #23AA49;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.col> span{
+    color:solid black;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+}

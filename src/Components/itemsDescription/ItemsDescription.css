@@ -1,0 +1,13 @@
+/* .back-img{
+    position: absolute;
+    z-index: -1;
+    margin-right: 100px;
+} */
+.main-img {
+    position: relative;
+    z-index: 1;
+}
+
+.save-icon{
+    top: 35px;
+}

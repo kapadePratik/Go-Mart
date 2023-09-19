@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "image": "grocbanner1.jpg"
+    },
+    {
+        "id":2,
+        "image": "grocbanner2.jpg"
+    },
+    {
+        "id":3,
+        "image":"grocbanner3.jpg"
+    }
+]

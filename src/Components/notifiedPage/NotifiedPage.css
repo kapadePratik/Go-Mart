@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+  }
+
+  .input-content{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    /* background-color: black; */
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+ .input-content{
+    width: 40%;
+    margin-right: 755px;
+ }
+
+ .input-content>button{
+    outline: none;
+    border: none;
+   color: white;
+    background-color:  #23AA49;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+
+ }
