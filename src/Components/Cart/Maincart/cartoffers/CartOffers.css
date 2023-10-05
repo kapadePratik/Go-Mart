@@ -1,0 +1,24 @@
+
+.offers-btn {
+    border: none;
+    outline: none;
+    background-color: #D7D7D7;
+    color: white;
+    border-radius: 10px;
+}
+
+
+.offer-heading {
+    color: #575c55;
+    font-size: 22px;
+    font-weight: 700;
+}
+.offer-para {
+    color: #838383;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.cancle-icon {
+    cursor: pointer;
+}

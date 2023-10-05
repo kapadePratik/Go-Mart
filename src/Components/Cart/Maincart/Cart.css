@@ -1,0 +1,58 @@
+.card-body-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* .cart-icons{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+} */
+
+.number-cart {
+    font-size: 20px;
+  font-weight: 600;
+  color: black;
+  gap: 25px;
+}
+
+.back-shop a{
+  outline: none;
+  border: none;
+  text-decoration: none;
+  color: #23aa49;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.back-shop p{
+    color: #23aa49;
+}
+
+.back-shop span {
+    color: #23aa49;
+    /* display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start; */
+}
+ 
+.promo-code {
+    color: #1E9DC2;
+    cursor: pointer;
+}
+.link-tag {
+    text-decoration: none;
+}
+
+.list-group-item {
+    border: none;
+}
+
+.promocode-text {
+    color: #838383;
+    font-size: 12px;
+    font-weight: 400;
+}

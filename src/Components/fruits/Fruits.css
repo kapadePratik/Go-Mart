@@ -1,10 +1,18 @@
-.card-body {
-  background-color: #f9f3f2;
+/* .card-body {
   cursor: pointer;
+  padding: 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+} */
+
+.new-card-css{
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
 }
 
-
+.new-card-css img{
+  border-radius: 10px;
+}
 
 .col > span {
   color: solid black;
@@ -20,7 +28,7 @@
   background-color: #23aa49;
   padding: 4px 8px;
   margin: 5px 5px;
-  border-radius: 6px;
+  border-radius: 4px;
   font-weight: 500;
   font-size: 18px;
   text-align: center;
@@ -38,4 +46,64 @@
   font-weight: 500;
   font-size: 16px;
   cursor: pointer;
+}
+
+
+/* .heart-btn {
+  border: none;
+  outline: none;
+  text-decoration: none;
+} */
+
+.heart-icon {
+  outline: none;
+  border: none;
+  text-decoration: none;
+  
+}
+
+.like-button {
+  cursor: pointer;
+  font-size: 24px;
+  transition: color 0.2s ease; /* Add a transition effect for smooth color change */
+}
+
+.liked {
+  color: red;
+}
+
+.item-namestyle{
+  font-size: 22px;
+  font-weight: 700;
+  color: black;
+}
+
+.icon{
+  position: absolute;
+  font-size: 24px;
+}
+
+.left-icon{
+  top: px;
+  left: 35px;
+}
+
+.right-icon{
+  top: 35px;
+  right: 35px;
+}
+
+@media (min-width: 1024px) {
+  .heart-desktopview {
+    vertical-align: middle;
+   
+}
+}
+
+.fruits-name{
+  font-size: 24px;
+  font-weight: 700;
+  color: #575C55;
+  line-height: 2px;
+letter-spacing: 1.5px;
 }

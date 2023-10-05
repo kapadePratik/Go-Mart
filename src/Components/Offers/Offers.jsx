@@ -10,31 +10,43 @@ const Offers = () => {
         <div className="offers mt-5">
         <div class="row justify-content-center">
     <div class="col-6">
-      <img
+
+      <div className='banner'>
+      <img className='img-fluid'
       src={grocery1}
       alt=''
       height={250}
       width={600}
       />
+      </div>
+      
     </div>
     <div class="col-6">
-    <img
+      <div className='banner'>
+      <img
+        className='img-fluid'
       src={grocery2}
       alt=''
       height={250}
       width={600}
       />
+      </div>
+  
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-6  offset-md-3 mt-3">
-    <img
+      <div className='banner'>
+      <img
+    className='img-fluid'
       src={grocery3}
       alt=''
       height={250}
       width={600}
       />
+      </div>
+   
     </div>
   </div>
         </div>

@@ -20,12 +20,12 @@ const FruitsPage = () => {
           </div>
 
           <div
-            class="row row-cols-2 row-cols-lg-6 g-2 g-lg-3 mt-2
+            class="row row-cols-1 row-cols-lg-6 g-2 g-lg-3 mt-2
       ">
             <div class="col">
-             <Link to='/itemsdescription' className="link-tag-card"> <div class="card-body card">
+             <div class="card-body card">
                 <div className="card-img">
-                  <img src={apple} height={100} width={100} alt="" />
+                <Link to='/itemsdescription' className="link-tag-card"><img src={apple} height={100} width={100} alt="" /></Link>
                 </div>
                 <span>Apple, 1kg</span>
                 <h5> &#8377; 120</h5>
@@ -43,13 +43,13 @@ const FruitsPage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-                <div class="d-flex justify-content-evenly">
+                <div class="d-flex justify-content-center mt-2">
                   <button className="btn">Add to Cart</button>
                   <button className="btn">
                     <BsHeart />
                   </button>
                 </div>
-              </div></Link>
+              </div>
             </div>
             <div class="col">
               <div class="card-body card">
@@ -73,7 +73,7 @@ const FruitsPage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-                <div class="d-flex justify-content-evenly">
+                <div class="d-flex justify-content-center  mt-2">
                   <button className="btn">Add to Cart</button>
                   <button className="btn">
                     <BsHeart />
@@ -103,7 +103,7 @@ const FruitsPage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-                <div class="d-flex justify-content-evenly">
+                <div class="d-flex justify-content-center  mt-2">
                   <button className="btn">Add to Cart</button>
                   <button className="btn">
                     <BsHeart />
@@ -133,7 +133,7 @@ const FruitsPage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-                <div class="d-flex justify-content-evenly">
+                <div class="d-flex justify-content-center  mt-2">
                   <button className="btn">Add to Cart</button>
                   <button className="btn">
                     <BsHeart />
@@ -162,7 +162,7 @@ const FruitsPage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-                <div class="d-flex justify-content-evenly">
+                <div class="d-flex justify-content-center  mt-2">
                   <button className="btn">Add to Cart</button>
                   <button className="btn">
                     <BsHeart />
@@ -192,7 +192,7 @@ const FruitsPage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-                <div class="d-flex justify-content-evenly">
+                <div class="d-flex justify-content-center  mt-2">
                   <button className="btn">Add to Cart</button>
                   <button className="btn">
                     <BsHeart />

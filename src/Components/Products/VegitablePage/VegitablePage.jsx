@@ -19,7 +19,7 @@ const VegitablePage = () => {
         <h3>Vegitables</h3>{" "}
       </div>
       <div
-        class="row row-cols-2 row-cols-lg-6 g-2 g-lg-3 mt-2
+        class="row row-cols-1 row-cols-lg-6 g-2 g-lg-3 mt-2
     ">
         <div class="col">
           <div class="card-body card">
@@ -42,7 +42,7 @@ const VegitablePage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-            <div class="d-flex justify-content-evenly">
+            <div class="d-flex justify-content-center mt-2">
               <button className="btn">Add to Cart</button>
               <button className="btn">
                 <BsHeart />
@@ -71,7 +71,7 @@ const VegitablePage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-            <div class="d-flex justify-content-evenly">
+            <div class="d-flex justify-content-center mt-2">
               <button className="btn">Add to Cart</button>
               <button className="btn">
                 <BsHeart />
@@ -100,7 +100,7 @@ const VegitablePage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-            <div class="d-flex justify-content-evenly">
+            <div class="d-flex justify-content-center mt-2">
               <button className="btn">Add to Cart</button>
               <button className="btn">
                 <BsHeart />
@@ -129,7 +129,7 @@ const VegitablePage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-            <div class="d-flex justify-content-evenly">
+            <div class="d-flex justify-content-center mt-2">
               <button className="btn">Add to Cart</button>
               <button className="btn">
                 <BsHeart />
@@ -158,7 +158,7 @@ const VegitablePage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-            <div class="d-flex justify-content-evenly">
+            <div class="d-flex justify-content-center mt-2">
               <button className="btn">Add to Cart</button>
               <button className="btn">
                 <BsHeart />
@@ -188,7 +188,7 @@ const VegitablePage = () => {
                   <option value="2">2 KG</option>
                   <option value="3">3 KG</option>
                 </select>
-            <div class="d-flex justify-content-evenly">
+            <div class="d-flex justify-content-center mt-2">
               <button className="btn">Add to Cart</button>
               <button className="btn">
                 <BsHeart />

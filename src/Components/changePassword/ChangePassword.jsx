@@ -1,6 +1,7 @@
 import React from "react";
 import "./ChangePassword.css";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const ChangePassword = () => {
   return (
@@ -49,11 +50,11 @@ const ChangePassword = () => {
                       />
                     </div>
                     <div className="mb-3">
-                      <button
+                     <Link to='/' className="link-tag"> <button
                         type="submit"
                         className="btn signin-btn  w-50 mt-3">
                         Done
-                      </button>{" "}
+                      </button></Link>
                     </div>
                   </div>
                 </form>

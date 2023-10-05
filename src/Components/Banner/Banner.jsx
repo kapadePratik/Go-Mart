@@ -1,63 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Banner.css";
-import { useState, useRef } from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { Scrollbar, A11y } from "swiper/modules";
+import { Scrollbar, A11y, Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
+// import "swiper/css/pagination";
 // import picture from "../images/grocbanner1.jpg";
 // import picture2 from "../images/grocbanner2.jpg";
 import { sliderSettings } from "../../utils/common";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import data from "../../utils/banner.json";
+import { getBanner } from "../../utils/api";
+
 const Banner = () => {
+  const [data, setdata] = useState([]);
+
+  useEffect(() => {
+    async function fetchDataFromAPI() {
+      try {
+        const apiData = await getBanner();
+        setdata(apiData.data);
+      } catch (error) {
+        // console.log(error);
+      }
+    }
+
+    fetchDataFromAPI();
+  }, []);
   return (
-    <div className="container mt-5">
+    <div className="container banner-position">
       <div className="banner-item">
         <Swiper
           spaceBetween={15}
-          slidesPerView={4}
+          slidesPerView={1}
           breakpoints={{
             0: {
               slidesPerView: 1,
             },
             400: {
-              slidesPerView: 2,
+              slidesPerView: 1,
             },
             639: {
-              slidesPerView: 3,
+              slidesPerView: 1,
             },
             865: {
-              slidesPerView: 4,
+              slidesPerView: 1,
             },
             1000: {
-              slidesPerView: 5,
+              slidesPerView: 1,
             },
             1500: {
-              slidesPerView: 4,
+              slidesPerView: 1,
             },
             1700: {
-              slidesPerView: 7,
+              slidesPerView: 1,
             },
           }}
           autoplay={{
-            delay: 2500,
+            delay: 3000,
             disableOnInteraction: false,
           }}
-          pagination={{
-            clickable: true,
-          }}
           navigation={true}
-          modules={[Autoplay, Pagination, Navigation]}>
+          modules={[Autoplay, Navigation, Pagination]}>
           {data.map((card, i) => {
             return (
               <>
                 <SwiperSlide key={i}>
-                  <div className="">
-                    <img
-                      src={require(`../images/${card.image}`)}
-                      alt="home"
-                    />
+                  <div className="container-fluid m-0 p-0 mt-5">
+                    <div className="row">
+                      <div className="col">
+                        <div className="banner">
+                          <img
+                            className="img-fluid banner-img" 
+                            src={
+                              "https://gomart.thecompletesoftech.pw/uploads/" +
+                              card.banner_image
+                            }
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </SwiperSlide>
               </>
@@ -67,7 +89,6 @@ const Banner = () => {
       </div>
     </div>
   );
-
 };
 
 export default Banner;

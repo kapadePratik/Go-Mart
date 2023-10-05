@@ -1,5 +1,36 @@
-/* .banner-item>img{
-    width: 95%;
-    height: 40vh;
-    margin-right: 15px;
-} */
+
+.swiper-button-next {
+    visibility: hidden;
+}
+.swiper-button-prev {
+    visibility: hidden;
+}
+
+.banner {
+    height: 300px; 
+    overflow: hidden; /* Hide any overflowing content */
+}
+
+.banner img{
+    width: 100%;
+    height: 300px;
+    object-fit: fill;
+    border-radius: 30px;
+}
+
+.banner-position{
+    position: relative;
+}
+
+@media only screen and (min-width: 1024px) {
+    .banner {
+        height: 88vh; 
+        overflow: hidden; /* Hide any overflowing content */
+    }
+    
+    .banner img{
+        width: 100%;
+        height: 88vh;
+        object-fit: fill;
+    }
+}
