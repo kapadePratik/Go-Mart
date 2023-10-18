@@ -13,3 +13,18 @@
 .link-tag{
     text-decoration: none;   
 }
+
+.registerbtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 55px;
+    
+}
+

@@ -72,7 +72,7 @@ const Banner = () => {
                           <img
                             className="img-fluid banner-img" 
                             src={
-                              "https://gomart.thecompletesoftech.pw/uploads/" +
+                              "https://gomart.thecompletesoftech.in/uploads/" +
                               card.banner_image
                             }
                             alt=""

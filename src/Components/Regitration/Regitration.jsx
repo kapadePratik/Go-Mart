@@ -8,11 +8,7 @@ import { FaFacebook } from "react-icons/fa";
 import { IoMdContact } from "react-icons/io";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-
-import { apimethod, registerUser } from "../../utils/api";
+import { userregister } from "../../utils/api";
 
 const Regitration = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +32,7 @@ const Regitration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await apimethod('userRegister',formData);
+    const response = await userregister('userRegister',formData);
     const newresponse = response;
     console.log(newresponse);
     if (newresponse.status == false) {
@@ -45,7 +41,6 @@ const Regitration = () => {
     if (newresponse.status == true) {
       setValidationErrors('')
       window.alert(newresponse.message);
-
     }
   };
 
@@ -89,7 +84,7 @@ const Regitration = () => {
                 </div>
 
                 <div className="mb-3 mt-3">
-                  <div className="input-group signin-input mt-5 w-75 mx-auto">
+                  <div className="input-group signin-input mt-4   w-75 mx-auto">
                     <span className="input-group-text ">
                       <span>
                         <IoMdContact size={30} />
@@ -218,20 +213,20 @@ const Regitration = () => {
                   </Link>
                 </div>
 
-                <div className="mb-3">
-                  <button type="submit" className="btn signin-btn  w-50 mt-3">
+                <div className="mb-3 ms-5 registerbtn">
+                  <button type="submit" className="btn signin-btn  w-50 mt-3 ">
                     Register Now
                   </button>
                 </div>
                 <h5>Or</h5>
-                <div className="d-flex justify-content-center signin-icon">
-                  <span className="ms-5">
+                <div className="d-flex justify-content-center register-icon ms-5">
+                  <span className="mt-3">
                     <FcGoogle size={30} />
                   </span>
-                  <span className="mr-5">
+                  <span className="mt-3">
                     <FaApple size={30} />
                   </span>
-                  <span>
+                  <span className="mt-3">
                     <FaFacebook size={30} />
                   </span>
                 </div>

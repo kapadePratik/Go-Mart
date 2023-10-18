@@ -3,7 +3,7 @@
 import React from 'react';
 import { HashLoader as Loader } from 'react-spinners';
 import styled from 'styled-components';
-
+import './HashLoader.css';
 // Create a styled-component for the loader
 const LoaderWrapper = styled.div`
   display: flex;
@@ -14,8 +14,10 @@ const LoaderWrapper = styled.div`
 
 const HashLoader = () => {
   return (
-    <LoaderWrapper>
-      <Loader color={'#23AA49'} loading={true} size={50} />
+    <LoaderWrapper >
+      <Loader color={'#23AA49'} loading={true} size={50} 
+       className='loader'
+      />
     </LoaderWrapper>
   );
 };

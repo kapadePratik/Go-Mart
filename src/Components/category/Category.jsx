@@ -55,7 +55,7 @@ const Category = () => {
                     <div class="bg-image hover-zoom ripple shadow-1-strong rounded ">
                       <img
                         src={
-                          "https://gomart.thecompletesoftech.pw/uploads/" +
+                          "https://gomart.thecompletesoftech.in/uploads/" +
                           card.category_image
                         }
                         style={{

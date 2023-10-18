@@ -7,7 +7,7 @@ import { FaApple } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Navigation } from "react-router-dom";
-import { apimethod } from "../../utils/api";
+import { apimethod,sendOtp } from "../../utils/api";
 import axios from "axios";
 
 const ForgetPassword = () => {
@@ -16,6 +16,7 @@ const ForgetPassword = () => {
   const [formData, setFormData] = useState({
     email: "",
   });
+  // console.log(formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +27,7 @@ const ForgetPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await apimethod("forgetPassword", formData);
+      const response = await apimethod("sendOtp", formData);
       const newresponse = response;
 
       console.log(newresponse);
@@ -79,13 +80,14 @@ const ForgetPassword = () => {
                       />
                     </div>
                     <div className="mb-3">
-                      <Link to="/otpgenerator">
-                        <button
+                      {/* <Link to="/otpgenerator"> */}
+                        <button 
+                        onSubmit={handleSubmit}
                           type="submit"
                           className="btn signin-btn  w-50 mt-3">
                           Send Now
                         </button>{" "}
-                      </Link>
+                      {/* </Link> */}
                     </div>
                   </div>
                 </div>

@@ -59,11 +59,10 @@
 
 .subtraction-icon {
   /* background-color: gray; */
-  color: #DADADA;
+  color: #dadada;
   outline: none;
   border: none;
   cursor: pointer;
- 
 }
 
 .addition-icon {
@@ -95,6 +94,7 @@
 }
 
 .grey-color {
+  display: flex;
   color: #979899;
   font-size: 18px;
   font-weight: 600;
@@ -115,9 +115,20 @@
 }
 
 .addcart-btn {
-    outline: none;
-    border: none;
-    background-color: #23aa49;
-    color: white;
-     border-radius: 10px;
+  outline: none;
+  border: none;
+  background-color: #23aa49;
+  color: white;
+  border-radius: 10px;
+}
+
+/* .addcart-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+} */
+
+.description-img{
+  object-fit: cover;
 }

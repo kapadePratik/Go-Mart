@@ -86,3 +86,9 @@
     text-decoration: none;
 }
 
+.login-signinbtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

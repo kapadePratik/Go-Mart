@@ -78,20 +78,7 @@
   color: black;
 }
 
-.icon{
-  position: absolute;
-  font-size: 24px;
-}
 
-.left-icon{
-  top: px;
-  left: 35px;
-}
-
-.right-icon{
-  top: 35px;
-  right: 35px;
-}
 
 @media (min-width: 1024px) {
   .heart-desktopview {

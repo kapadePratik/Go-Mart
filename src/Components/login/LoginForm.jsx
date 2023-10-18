@@ -5,10 +5,8 @@ import { HiOutlineMail } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import { apimethod, loginUser } from "../../utils/api";
-import axios from "axios";
+import { Link, json } from "react-router-dom";
+import { Login } from "../../utils/api";
 
 const LoginForm = () => {
   const [validationErrors, setValidationErrors] = useState({});
@@ -27,19 +25,23 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await apimethod('login',formData);
+      const response = await Login("login", formData);
       const newresponse = response;
-      
-      console.log(newresponse);
+      const accessToken = localStorage.setItem("token", response.token);
+      const idToken = localStorage.setItem(
+        "userinfo",
+        JSON.stringify(response.data)
+      );
 
-      if (newresponse.status == false) {
+      setFormData("");
+
+      if (formData.email == "" || formData.password == "") {
         setValidationErrors(newresponse.errors);
       }
 
       if (newresponse.status == true) {
         window.alert(newresponse.message);
       }
-
     } catch (error) {
       console.log(error);
     }
@@ -115,25 +117,26 @@ const LoginForm = () => {
 
                 <Link to="/forgetpassword" className="link-tag">
                   {" "}
-                  <span className="ms-5 sign-inforgot text-center">
+                  <span className="ms-4 sign-inforgot text-center">
                     FORGOT PASSWORD?
-                  </span>{" "}
+                  </span>
                 </Link>
-                <div className="mb-3">
-                  <button type="submit" className="btn signin-btn  w-50 mt-3">
+                <div className=" ms-5 login-signinbtn">
+                  <button type="submit" className="btn signin-btn  w-50 mt-3 ">
                     Sign In
                   </button>
                 </div>
 
-                <h5>Or</h5>
-                <div className="d-flex justify-content-center signin-icon">
-                  <span className="ms-5">
+                <h5 className="mt-3">Or</h5>
+
+                <div className="d-flex justify-content-center signin-icon ms-5">
+                  <span className=" mt-3">
                     <FcGoogle size={30} />
                   </span>
-                  <span className="mr-5">
+                  <span className=" mt-3">
                     <FaApple size={30} />
                   </span>
-                  <span>
+                  <span className="mt-3">
                     <FaFacebook size={30} />
                   </span>
                 </div>

@@ -16,7 +16,10 @@ const Cart = () => {
   const [count, setCount] = useState(1);
   const [quantity, setQuantity] = useState([]);
 
- 
+  const [getprofile, setGetprofile] = useState([]);
+  const [changedata, setchangedata] = useState(0);
+
+  
 
   const cart = [
     {
