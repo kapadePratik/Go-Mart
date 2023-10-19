@@ -44,3 +44,11 @@
   font-size: 18px;
   font-weight: 600;
 }
+
+@media (max-width: 767px) {
+  .mobileview-btn {
+    width: 75%;
+    justify-content: center;
+    margin: auto;
+  }
+}

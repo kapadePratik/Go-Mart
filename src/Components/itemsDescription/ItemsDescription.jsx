@@ -10,36 +10,20 @@ import organic from "../images/organic.png.png";
 import rating from "../images/rating.png.png";
 import calender from "../images/calender.png.png";
 import calories from "../images/calories.png.png";
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import axios from "axios";
 import { apimethod, Addcart } from "../../utils/api";
 import { useLocation } from "react-router-dom";
 
 const ItemsDescription = () => {
   const { state } = useLocation();
-  
 
   const itemWeightString = JSON.parse(state.item_weight);
 
   const [count, setCount] = useState(1);
 
-  const [validationErrors, setValidationErrors] = useState({});
-  const [getprofile, setGetprofile] = useState([]);
-  const [changedata, setchangedata] = useState(0);
-
-  const [selectedValue, setSelectedValue] = useState('');
-
-  // Event handler to update the selected value
-  
   const increment = () => {
     setCount(count + 1);
   };
 
-  const handleSelectChange = (event) => {
-    console.log(event.target.value);
-    setSelectedValue(event.target.value);
-  };
 
   const decrement = () => {
     if (count > 0) {
@@ -51,7 +35,6 @@ const ItemsDescription = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
- 
 
   const [formData, setFormData] = useState({
     item_id: state.item_id,
@@ -61,23 +44,15 @@ const ItemsDescription = () => {
     item_description: state.item_description,
     dis_item_price: state.dis_item_price,
     item_expiry_date: state.item_expiry_date,
-    item_weight: selectedValue,
-   
+    item_weight: '5Kg',
   });
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
     try {
       const response = await apimethod("Addcart", formData);
       const newresponse = response;
-
-      if (newresponse.status == false) {
-        setValidationErrors(newresponse.errors);
-      }
 
       if (newresponse.status == true) {
         window.alert(newresponse.message);
@@ -85,12 +60,8 @@ const ItemsDescription = () => {
     } catch (error) {
       console.log(error);
     }
-    
-  };
 
-  // useEffect(() =>{
-  //     console.log(count);
-  // },[])
+  };
 
   return (
     <>
@@ -117,9 +88,11 @@ const ItemsDescription = () => {
               <p className="  ms-5 mt-2">{state.item_description}</p>
             </div>
             <div className="d-flex justify-content-center">
-                <button className="addcart-btn signin-btn w-50 " onClick={handleSubmit}>
-                  Add to cart
-                </button>
+              <button
+                className="addcart-btn signin-btn w-50 "
+                onClick={handleSubmit}>
+                Add to cart
+              </button>
             </div>
           </div>
 
@@ -224,7 +197,6 @@ const ItemsDescription = () => {
                 </div>
 
                 <div className="item-icons mt-3">
-                
                   <span className="subtraction-icon" onClick={decrement}>
                     <HiMinusCircle size={40} />
                   </span>
@@ -236,7 +208,8 @@ const ItemsDescription = () => {
                 <div className="row">
                   <div className="col-lg-3">
                     <select
-                   value={selectedValue} onChange={handleSelectChange}
+                      value={formData.item_weight}
+                      onChange={handleChange}
                       className="form-select form-select-border-radius select-content"
                       aria-label=".form-select-lg example form-dropdown ">
                       {itemWeightString.map((weight, index) => (

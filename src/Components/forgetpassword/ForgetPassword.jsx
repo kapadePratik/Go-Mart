@@ -28,6 +28,7 @@ const ForgetPassword = () => {
 
     try {
       const response = await apimethod("sendOtp", formData);
+      
       const newresponse = response;
 
       console.log(newresponse);
@@ -79,7 +80,7 @@ const ForgetPassword = () => {
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-3 mobileview-btn">
                       {/* <Link to="/otpgenerator"> */}
                         <button 
                         onSubmit={handleSubmit}

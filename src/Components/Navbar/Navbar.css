@@ -342,6 +342,15 @@
   @media (max-width: 767px) {
    .mobile-sidebar {
     width: 100%;
+    
+   }
+
+
+
+   .togglebtn-mobilemedia{
+    padding-right: 2.5rem;
+    margin-left: 5rem;
+
    }
   }
 
@@ -352,6 +361,8 @@
   .cart-icons{
     gap: 4px;
   }
+
+
 
   .promocode-input ::placeholder{
       font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

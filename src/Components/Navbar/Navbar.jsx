@@ -19,6 +19,12 @@ import { HiOutlineArrowCircleLeft } from "react-icons/hi";
 import { BiSolidOffer } from "react-icons/bi";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import {
+  apimethod,
+  RemoveAddcart,
+  getCartItem,
+  apigetmethod,
+} from "../../utils/api";
 
 const Navbar = () => {
   var btnst = true;
@@ -36,40 +42,7 @@ const Navbar = () => {
 
   const [count, setCount] = useState(1);
   const [quantity, setQuantity] = useState([]);
-
-  const cart = [
-    {
-      id: 1,
-      name: "apple",
-      des: "Fruits",
-      image: require("../images/apple.jpg"),
-      quantity: 1,
-      qun: [{ name: "1KG" }, { name: "2KG" }, { name: "3KG" }],
-      price: "$12",
-    },
-    {
-      id: 1,
-      name: "Dairy Milk",
-      des: "Chocolate",
-      image: require("../images/chocalates.jpg"),
-      qun: [{ name: "7KG" }, { name: "5KG" }, { name: "8KG" }],
-      price: "$18",
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: "Dettol",
-      des: "Household product ",
-      image: require("../images/dettol.jfif"),
-      qun: [{ name: "1KG" }, { name: "2KG" }, { name: "3KG" }],
-      price: "$15",
-      quantity: "1",
-    },
-  ];
-
-  useEffect(() => {
-    setvalue();
-  }, []);
+  const [cart, setCart] = useState([]);
 
   const setvalue = () => {
     var list = [];
@@ -94,37 +67,42 @@ const Navbar = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // // navbar scrolling //
-  // const [lastScrollY, setLastScrollY] = useState(0);
-  // const [display, setDisplay] = useState("top");
-  // const [mobileMenu, setMobileMenu] = useState(false);
+  const handleSubmit = async (id) => {
+    // e.preventDefault();
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", contolNavbar);
-  //   return () => {
-  //     window.removeEventListener("scroll", contolNavbar);
-  //   };
-  // }, [lastScrollY]);
+    var body = {
+      cart_id: id,
+    };
 
-  // const contolNavbar = () => {
-  //   console.log(window.scrollY);
-  //   if (window.scrollY > 200) {
-  //     if (window.scrollY > lastScrollY && !mobileMenu) {
-  //       setDisplay("hide");
-  //     } else {
-  //       setDisplay("display");
-  //     }
+    try {
+      const response = await apimethod("RemoveAddcart", body);
+      const newresponse = response;
 
-  //     if (window.scrollY > lastScrollY) {
-  //       setDisplay("hide");
-  //     } else {
-  //       setDisplay("display");
-  //     }
-  //   } else {
-  //     setDisplay("top");
-  //   }
-  //   setLastScrollY(window.scrollY);
-  // };
+      // console.log(newresponse);
+
+      if (newresponse.status == true) {
+        window.alert(newresponse.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getcartrecord = async () => {
+    await apimethod("getCartItem").then((result) => {
+      if (result != false) {
+        // setdata(result.data);
+        // setLoading(false);
+        setCart(result.data);
+      }
+      // setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getcartrecord();
+    setvalue();
+  }, []);
 
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary nav-body d-flex justify-content-around  ">
@@ -142,7 +120,7 @@ const Navbar = () => {
           </a>
         </Link>
         <button
-          class="navbar-toggler"
+          class="navbar-toggler togglebtn-mobilemedia"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -241,12 +219,19 @@ const Navbar = () => {
 
             <header class="header">
               <div class="header_in">
-                <button type="button" class="toggle" id="toggle" onClick={()=> showsidebar()} >
+                <button
+                  type="button"
+                  class="toggle"
+                  id="toggle"
+                  onClick={() => showsidebar()}>
                   {/* <span></span> */}
                   <i class="fas fa-shopping-cart mx-4"></i>
                 </button>
               </div>
             </header>
+
+            {/* SIDEBAR */}
+
             <div class="sidebar mobile-sidebar" id="sidebar">
               <section class="" style={{ backgroundColor: "#d2c9ff;" }}>
                 <div className="container">
@@ -269,12 +254,12 @@ const Navbar = () => {
                       <>
                         <div className="card mt-2" key={index}>
                           <div className="d-flex justify-content-between align-items-center">
-                            <img src={item.image} width={75} height={75} />
+                            <img src={item.item_image} width={75} height={75} />
                             <div class="col-md-3 col-lg-3 col-xl-3">
-                              <h6 class="text-muted">{item.name}</h6>
-                              <h6 class="text-black mb-0">{item.des}</h6>
+                              <h6 class="text-muted">{item.item_name}</h6>
+                              <h6 class="text-black mb-0">{item.item_description}</h6>
                             </div>
-                            <select
+                            {/* <select
                               class="form-select form-select-border-radius mt-3 w-25"
                               aria-label="form-select-lg example form-dropdown">
                               <option
@@ -283,15 +268,15 @@ const Navbar = () => {
                                 className="dropdown-product">
                                 {item.name}
                               </option>
-                            </select>
+                            </select> */}
 
                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                              <h6 class="mb-0">{item.price}</h6>
+                              <h6 class="mb-0">{item.item_price}</h6>
                             </div>
                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                              <a href="#!" class="text-muted">
-                                <i class="fas fa-times"></i>
-                              </a>
+                              <i
+                                class="fas fa-times"
+                                onClick={() => handleSubmit(item.id)}></i>
                             </div>
                           </div>
                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex ms-5">
@@ -346,7 +331,8 @@ const Navbar = () => {
                     <div className="d-flex justify-content-around">
                       <h5 class=" promo-code mr-5 ">
                         {" "}
-                        <BiSolidOffer onClick={()=>handleShow} /> &nbsp;Promo code?
+                        <BiSolidOffer onClick={() => handleShow} /> &nbsp;Promo
+                        code?
                       </h5>
                       <div className="promocode-input">
                         <input

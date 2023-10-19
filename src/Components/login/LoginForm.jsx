@@ -122,7 +122,10 @@ const LoginForm = () => {
                   </span>
                 </Link>
                 <div className=" ms-5 login-signinbtn">
-                  <button type="submit" className="btn signin-btn  w-50 mt-3 ">
+                  <button
+                   
+                    type="submit"
+                    className="btn signin-btn  w-50 mt-3 ">
                     Sign In
                   </button>
                 </div>

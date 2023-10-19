@@ -106,14 +106,16 @@ const OTPPage = () => {
                     <a href="">Resend</a>
                   </div>
                 </div>
-                {/* <Link to='/changepassword'> */}
+                <div className="mobileview-btn">
                 <button
                   type="submit"
                 
                   class="btn signin-btn  w-50 mt-3">
                   Submit
                 </button>
-                {/* </Link>  */}
+                </div>
+               
+              
               </div>
             </div>
           </div>

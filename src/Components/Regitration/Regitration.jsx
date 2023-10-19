@@ -21,7 +21,7 @@ const Regitration = () => {
     fcm_token: "",
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   const [validationErrors, setValidationErrors] = useState({});
 

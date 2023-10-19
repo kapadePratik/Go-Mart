@@ -52,6 +52,17 @@ export const apimethod = async (url, formdata) => {
   }
 };
 
+export const apigetmethod = async (url) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/${url}`
+    );
+    return response.data;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const userregister = async (url, formdata) => {
   try {
     const response = await axios.post(
