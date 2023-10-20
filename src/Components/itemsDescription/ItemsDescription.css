@@ -132,3 +132,7 @@
 .description-img{
   object-fit: cover;
 }
+
+.custom-swal-button{
+  width: 100%;
+}

@@ -25,6 +25,7 @@ import {
   getCartItem,
   apigetmethod,
 } from "../../utils/api";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   var btnst = true;
@@ -77,13 +78,25 @@ const Navbar = () => {
     try {
       const response = await apimethod("RemoveAddcart", body);
       const newresponse = response;
-
-      // console.log(newresponse);
-
       if (newresponse.status == true) {
-        window.alert(newresponse.message);
+        Swal.fire({
+          icon: "success",
+          title: "Item Removed",
+          text: "The item has been deleted successfully.",
+          customClass: {
+            container: "custom-swal-container",
+            confirmButton: "custom-swal-confirm-button",
+          },
+        });
       }
+
+      setCart((cart) => cart.filter((record) => record.id !== id));
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while deleting the record.",
+      });
       console.log(error);
     }
   };
@@ -254,22 +267,20 @@ const Navbar = () => {
                       <>
                         <div className="card mt-2" key={index}>
                           <div className="d-flex justify-content-between align-items-center">
-                            <img src={item.item_image} width={75} height={75} />
+                            <img
+                              src={
+                                "https://gomart.thecompletesoftech.in/uploads/" +
+                                item.item_image
+                              }
+                              width={75}
+                              height={75}
+                            />
                             <div class="col-md-3 col-lg-3 col-xl-3">
                               <h6 class="text-muted">{item.item_name}</h6>
-                              <h6 class="text-black mb-0">{item.item_description}</h6>
+                              <h6 class="text-black mb-0">
+                                {item.item_description}
+                              </h6>
                             </div>
-                            {/* <select
-                              class="form-select form-select-border-radius mt-3 w-25"
-                              aria-label="form-select-lg example form-dropdown">
-                              <option
-                                value={item.name}
-                                key={index}
-                                className="dropdown-product">
-                                {item.name}
-                              </option>
-                            </select> */}
-
                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                               <h6 class="mb-0">{item.item_price}</h6>
                             </div>
@@ -293,15 +304,19 @@ const Navbar = () => {
                                 <HiMinusCircle
                                   size={30}
                                   color={
-                                    quantity[index] != 1 ? "#23AA49" : "#DADADA"
+                                    item.item_quantity[index] != 1
+                                      ? "#23AA49"
+                                      : "#DADADA"
                                   }
                                 />
                               </span>
-                              <p className="number-cart">{quantity[index]}</p>
+                              <p className="number-cart">
+                                {item.item_quantity[index]}
+                              </p>
                               <span
                                 className="addition-icon"
                                 onClick={() => {
-                                  var data = [...quantity];
+                                  var data = [...item.item_quantity];
                                   data[index] = data[index] + 1;
                                   setQuantity(data);
                                 }}>
@@ -316,38 +331,24 @@ const Navbar = () => {
                   </div>
 
                   <div class="col-12">
-                    <div className="">
-                      <h3
-                        class="fw-bold ms-3 mb-5 p-0"
-                        style={{
-                          color: "#23aa49",
-                        }}>
-                        Summary
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div class="form-outline ">
-                    <div className="d-flex justify-content-around">
-                      <h5 class=" promo-code mr-5 ">
-                        {" "}
-                        <BiSolidOffer onClick={() => handleShow} /> &nbsp;Promo
-                        code?
-                      </h5>
-                      <div className="promocode-input">
-                        <input
-                          type="text"
-                          id="form3Examplea2"
-                          class="form-control w-100  mr-5"
-                          placeholder="Enter your code Here"
-                        />
+                    <div class="form-outline ">
+                      <div className="d-flex justify-content-center">
+                        <h5 class=" promo-code" style={{
+                          marginRight:"4rem",
+                        }} >
+                      
+                          <BiSolidOffer onClick={() => handleShow} />{" "}
+                          &nbsp;Promo code?
+                        </h5>
                       </div>
-                    </div>
-                    <br />
-                    <div className="d-flex justify-content-center">
-                      <button className="addcart-btn signin-btn w-25 fs-8 ">
-                        Apply
-                      </button>
+                      <br />
+                      <div className="d-flex justify-content-center ms-5">
+                        <Link to="/cartoffers">
+                          <button className=" signin-btn w-100 fs-8 ms-5 apply-btn ">
+                            Apply
+                          </button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

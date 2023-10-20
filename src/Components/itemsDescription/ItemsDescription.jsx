@@ -12,9 +12,11 @@ import calender from "../images/calender.png.png";
 import calories from "../images/calories.png.png";
 import { apimethod, Addcart } from "../../utils/api";
 import { useLocation } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const ItemsDescription = () => {
   const { state } = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const itemWeightString = JSON.parse(state.item_weight);
 
@@ -44,22 +46,42 @@ const ItemsDescription = () => {
     item_description: state.item_description,
     dis_item_price: state.dis_item_price,
     item_expiry_date: state.item_expiry_date,
-    item_weight: '5Kg',
+    item_weight: state.item_weight,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await apimethod("Addcart", formData);
-      const newresponse = response;
-
-      if (newresponse.status == true) {
-        window.alert(newresponse.message);
+   
+      const token = localStorage.getItem('token');
+  
+      if (token == null) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'You have to LOGIN first',
+          customClass:{
+             container:"custom-swal-button"
+          }
+          
+        })
+        // window.alert("you dont have login");
+      } else {
+        try {
+          const response = await apimethod("Addcart", formData);
+          const newresponse = response;
+          console.log(newresponse);
+    
+          if (newresponse.status == true) {
+            // window.alert(newresponse.message);
+            Swal.fire('Added in cart successfully!')
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    
+    
 
   };
 

@@ -5,13 +5,47 @@ import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import { apimethod,getCouponcode } from "../../../../utils/api";
+
 const CartOffers = () => {
+
+  const [validationErrors, setValidationErrors] = useState({});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await apimethod("getCouponcode ", formData);
+      
+      const newresponse = response;
+
+      console.log(newresponse);
+
+      if (newresponse.status == false) {
+        setValidationErrors(newresponse.errors);
+      }
+
+      if (newresponse.status == true) {
+        window.alert(newresponse.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
+
+
+
   return (
     <div className="row justify-content-center">
        <div className="cancle-icon ">
-                <Link to="/addtocart" className="link-tag">
-                  <MdCancel size={30} />
-                </Link>
+                <Link  to='/' style={{
+                      textDecoration:"none",
+                      outline:"none",
+                     }}><MdCancel size={30} /></Link>
+                
               </div>
       <div className=" col-md-8  ">
         <div className="">

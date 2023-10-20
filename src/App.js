@@ -25,6 +25,7 @@ import Address from "./Components/Payment/address/Address";
 import PaymentPopup from "./Components/Payment/paymentPopup/PaymentPopup";
 import UserProfile from "./Components/userProfile/UserProfile";
 import Favorite from "./Components/favorite/Favorite";
+import Swal from 'sweetalert2';
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,7 +34,34 @@ import {
   Link,
 } from "react-router-dom";
 
-function App() {
+import { useEffect,useState } from "react";
+
+function App() 
+{ 
+  const [message, setMessage] = useState('')
+  useEffect(() => {
+  localStorage.getItem('token');
+  const expirationTime = 25 *60 *1000; 
+  const timeoutId = setTimeout(() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userinfo');
+    Swal.fire({
+      icon: 'success',
+      title: 'Token Removed',
+      text: 'Token removed after 25 minutes.',
+    });
+    
+    setMessage('Token removed after 25 minutes.');
+    }, expirationTime);
+  
+
+  return () => clearTimeout(timeoutId);
+}, []);
+
+
+
+
+
   return (
     <div className="App">
       <Router>

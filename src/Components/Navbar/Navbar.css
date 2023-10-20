@@ -371,5 +371,15 @@
       color: #999;
   }
 
+  .custom-swal-container{
+     position: absolute;
+     z-index: 9999;
+  }
 
-  
+  .custom-swal-confirm-button{
+     width: 100%;
+  }
+
+  .apply-btn{
+    border-radius: 25px;
+  }
