@@ -146,7 +146,7 @@ const UserProfile = () => {
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
                     <BsCartCheck size={30}  className="cart1-icon"/>
-                    <p className="mb-0 cart1-text">Orders</p>
+                  <Link to='/orderstatus'><p className="mb-0 cart1-text">Orders</p></Link>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
                     <MdLocationCity size={30}  className="cart1-icon"/>

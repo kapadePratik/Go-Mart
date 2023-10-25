@@ -7,7 +7,7 @@ import { FaApple } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { IoMdContact } from "react-icons/io";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { userregister } from "../../utils/api";
 
 const Regitration = () => {
@@ -24,6 +24,7 @@ const Regitration = () => {
   // console.log(formData);
 
   const [validationErrors, setValidationErrors] = useState({});
+    const nav = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +42,7 @@ const Regitration = () => {
     if (newresponse.status == true) {
       setValidationErrors('')
       window.alert(newresponse.message);
+      nav("/")
     }
   };
 

@@ -383,3 +383,10 @@
   .apply-btn{
     border-radius: 25px;
   }
+
+  .dropdown-ltr{
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+
+  }

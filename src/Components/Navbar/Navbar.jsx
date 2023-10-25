@@ -45,6 +45,29 @@ const Navbar = () => {
   const [quantity, setQuantity] = useState([]);
   const [cart, setCart] = useState([]);
 
+
+
+  const logOut =() => {
+
+    Swal.fire({
+      title: 'Do you want to logout?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      denyButtonText: `Don't Logout`,
+      customClass: {
+        container: "custom-swal-container",
+        confirmButton: "custom-swal-confirm-button",
+      },
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success')
+        
+      } 
+    })
+  }
+
   const setvalue = () => {
     var list = [];
     for (let i = 0; i < cart.length; i++) {
@@ -145,7 +168,7 @@ const Navbar = () => {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0 navbar-mobileview">
             <li class="nav-item navbar-anchor px-5">
-              <a class="nav-link " href="#">
+              <a class="nav-link  " href="#">
                 Home
               </a>
             </li>
@@ -204,31 +227,58 @@ const Navbar = () => {
               </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="fas fa-user mx-1 text-black profile-icon"></i>
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">
-                  Option A
+            {/* Dropdown */}
+
+            {localStorage.getItem("token") ? (
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fas fa-user mx-1 text-black profile-icon"></i>
                 </a>
-                <a class="dropdown-item" href="#">
-                  Option B
+                <div class="dropdown-menu">
+                 
+                  <Link to='/userprofile' class="dropdown-item dropdown-ltr" >
+                    PROFILE
+                  </Link>
+                  <Link to='/orderlist' class="dropdown-item  dropdown-ltr" >
+                    Order List
+                  </Link>
+                  <Link to='/favorite' class="dropdown-item  dropdown-ltr" >
+                    Favourite List
+                  </Link>
+                  <Link class="dropdown-item  dropdown-ltr" onClick={logOut}>
+
+                    
+                    Logout
+                  </Link>
+                </div>
+              </li>
+            ) : (
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fas fa-user mx-1 text-black profile-icon"></i>
                 </a>
-                <a class="dropdown-item" href="#">
-                  Option C
-                </a>
-                <a class="dropdown-item" href="#">
-                  Option D
-                </a>
-              </div>
-            </li>
+                <div class="dropdown-menu">
+                  <Link to="/login" class="dropdown-item  dropdown-ltr">
+                    LOG IN
+                  </Link>
+                  <Link class="dropdown-item  dropdown-ltr" to="/register">
+                    SIGN IN
+                  </Link>
+                </div>
+              </li>
+            )}
 
             <header class="header">
               <div class="header_in">
@@ -333,10 +383,11 @@ const Navbar = () => {
                   <div class="col-12">
                     <div class="form-outline ">
                       <div className="d-flex justify-content-center">
-                        <h5 class=" promo-code" style={{
-                          marginRight:"4rem",
-                        }} >
-                      
+                        <h5
+                          class=" promo-code"
+                          style={{
+                            marginRight: "4rem",
+                          }}>
                           <BiSolidOffer onClick={() => handleShow} />{" "}
                           &nbsp;Promo code?
                         </h5>

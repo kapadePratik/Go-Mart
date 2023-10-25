@@ -5,11 +5,14 @@ import { HiOutlineMail } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-import { Link, json } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../../utils/api";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const [validationErrors, setValidationErrors] = useState({});
+
+  const nav = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -40,7 +43,9 @@ const LoginForm = () => {
       }
 
       if (newresponse.status == true) {
-        window.alert(newresponse.message);
+        // window.alert(newresponse.message);
+        Swal.fire("Login successfully !");
+        nav("/");
       }
     } catch (error) {
       console.log(error);
@@ -122,10 +127,7 @@ const LoginForm = () => {
                   </span>
                 </Link>
                 <div className=" ms-5 login-signinbtn">
-                  <button
-                   
-                    type="submit"
-                    className="btn signin-btn  w-50 mt-3 ">
+                  <button type="submit" className="btn signin-btn  w-50 mt-3 ">
                     Sign In
                   </button>
                 </div>

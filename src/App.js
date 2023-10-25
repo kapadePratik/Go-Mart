@@ -25,6 +25,8 @@ import Address from "./Components/Payment/address/Address";
 import PaymentPopup from "./Components/Payment/paymentPopup/PaymentPopup";
 import UserProfile from "./Components/userProfile/UserProfile";
 import Favorite from "./Components/favorite/Favorite";
+import OrderStatus from "./Components/orderStatus/OrderStatus";
+import OrderList from "./Components/OrderList/OrderList";
 import Swal from 'sweetalert2';
 import {
   BrowserRouter as Router,
@@ -97,6 +99,8 @@ function App()
           <Route exact path="/paymentpopup" element={<PaymentPopup />}></Route>
           <Route exact path="/userprofile" element={<UserProfile />}></Route>
           <Route exact path="/favorite" element={<Favorite />}></Route>
+          <Route exact path="/orderstatus" element={<OrderStatus />}></Route>
+          <Route exact path="/orderlist" element={<OrderList />}></Route>
      
     
         </Routes>

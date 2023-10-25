@@ -52,7 +52,7 @@ const Main = () => {
       {/* <Vegitables />
       <HouseholdProducts />
       <NotifiedPage /> */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
     )}
     </>

@@ -40,8 +40,8 @@ const Category = () => {
        ) : ( } */}
       <div>
         <section style={{ backgroundcolor: "#eee" }}>
-          <div class="container py-5">
-            <h4 class="text-center mb-5">
+          <div class="container">
+            <h4 class="d-flex justify-content-start ">
               <strong>Browse by Category</strong>
             </h4>
             <div class="d-flex flex-row-reverse mb-3">
@@ -75,7 +75,7 @@ const Category = () => {
                           style={{
                             backgroundColor: "rgba(253, 253, 253, 0.15)",
                           }}>
-                          <h3 className="d-flex justify-content-start ms-3 category-name tag">
+                          <h3 className="d-flex justify-content-center  category-name tag">
                             {card.category_name}
                           </h3>
                         </div>

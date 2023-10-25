@@ -52,11 +52,26 @@
     width: 100%;
     border-radius: 15px;
   }
+
+  
+
+}
+
+@media (max-width: 780px) {
+  .new-card {
+    flex-basis: 100%;
+  }
+  .title {
+    font-size: 30px;
+  }
 }
 
 @media (min-width: 1024px) {
   .card-width-mobile {
     width: 25%;
     border-radius: 15px;
+  }
+  .new-card {
+    flex-basis: 100%;
   }
 }
