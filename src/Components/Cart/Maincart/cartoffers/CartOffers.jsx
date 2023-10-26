@@ -23,12 +23,14 @@ const CartOffers = () => {
     getcoupon();
   }, []);
 
-  const [backgroundColor, setBackgroundColor] = useState("#23AA49");
+  const buttonColors = ['#CCD1D1 '];
 
-  const changeColor = () => {
-    setBackgroundColor(backgroundColor === "#23AA49" ? "#D7D7D7" : "#23AA49");
-  };
+  const [selectedColors, setSelectedColors] = useState(Array(buttonColors.length).fill(false));
 
+  const handleButtonClick = (index) => {
+    const newSelectedColors = selectedColors.map((_, i) => i === index);
+    setSelectedColors(newSelectedColors);
+  }
   return (
     // <div className="row justify-content-center">
     //   <div className="cancle-icon ">
@@ -150,76 +152,43 @@ const CartOffers = () => {
     <>
       <div class="offers-container offers-mobileview">
         <div className="row">
-          <div className="col-md-4">
-            <div class="offer-one-container">
-              <div class="offer-one">
-                <div class="circle offer-round">
-                  <span>£50</span>
+          {coupon &&
+            coupon.map((obj, index) => (
+              <>
+                <div className="col-md-4">
+                  <div class="offer-one-container" key={index}>
+                    <div class="offer-one">
+                      <div class="circle offer-round">
+                        <span>{obj.discount + "%"} </span>
+                      </div>
+                      <div class="bottom">
+                        <h1>{obj.coupan_title}</h1>
+                        <p>{obj.coupon_desc}</p>
+                        <span>sub</span>
+                      </div>
+                    </div>
+                    <div className="offer-anchor mt-3">
+                    {buttonColors.map((color, pick) => (
+                      
+                      <a
+                        href="#"
+                        className="cartoffer-btn"
+                        key={pick}
+                        style={{
+                          backgroundColor: selectedColors[pick] ? '#CCD1D1 ' : color,
+                        }}
+                        onClick={() => handleButtonClick(pick)}
+                        >
+                        Apply
+                      </a>
+                       ))}
+                    </div>
+                  </div>
                 </div>
-                <div class="bottom">
-                  <h1>Title</h1>
-                  <p>Description</p>
-                  <span>sub</span>
-                </div>
-              </div>
-              <div className="offer-anchor mt-3">
-                <a
-                  href="#"
-                  className="cartoffer-btn"
-                  onClick={changeColor}
-                  style={{ backgroundColor }}>
-                  Apply
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            {" "}
-            <div class="offer-two-container">
-              <div class="offer-two">
-                <div class="circle offer-round">
-                  <span>£150</span>
-                </div>
-                <div class="bottom">
-                  <h1>Title</h1>
-                  <p>Description</p>
-                  <span>sub</span>
-                </div>
-              </div>
-              <div className="offer-anchor mt-3">
-                <a
-                  href="#"
-                  className="cartoffer-btn"
-                  onClick={changeColor}
-                  style={{ backgroundColor }}>
-                  Apply
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div class="offer-three-container">
-              <div class="offer-three">
-                <div class="circle offer-round">
-                  <span>£200</span>
-                </div>
-                <div class="bottom">
-                  <h1>Title</h1>
-                  <p>Description</p>
-                  <span>sub</span>
-                </div>
-              </div>
-              <div className=" offer-anchor mt-3">
-                <a
-                  href="#"
-                  className="cartoffer-btn"
-                  onClick={changeColor}
-                  style={{ backgroundColor }}>
-                  Apply
-                </a>
-              </div>
-            </div>
-          </div>
+              </>
+            ))}
+
+          
         </div>
       </div>
     </>

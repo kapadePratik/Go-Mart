@@ -390,3 +390,15 @@
     color: #000000;
 
   }
+
+  @media (max-width: 780px){
+    .card{
+      
+        flex-basis: auto;
+    
+    }
+  }
+
+  /* .card {
+    flex-basis: auto;
+  } */

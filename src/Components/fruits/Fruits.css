@@ -108,7 +108,7 @@ letter-spacing: 1.5px;
   flex-wrap: wrap;
   width: 100%;
 }
-.card {
+.card-catogry {
   flex-basis: 33.33333%;
   
 }
@@ -223,7 +223,7 @@ letter-spacing: 1.5px;
 }
 
 @media (max-width: 780px) {
-  .card {
+  .card-catogry {
     flex-basis: 50%;
   }
   .title {
@@ -232,7 +232,7 @@ letter-spacing: 1.5px;
 }
 
 @media (max-width: 500px) {
-  .card {
+  .card-catogry {
     flex-basis: 5100%;
   }
   .box .close-btn {

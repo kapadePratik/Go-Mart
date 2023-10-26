@@ -67,11 +67,19 @@
 }
 
 @media (min-width: 1024px) {
-  .card-width-mobile {
+  .new-card-width-mobile {
     width: 25%;
     border-radius: 15px;
   }
   .new-card {
     flex-basis: 100%;
   }
+}
+
+.delete-icon{
+  cursor: pointer;
+}
+
+.delete-icon:hover{
+  color: #FF0E03 ;
 }

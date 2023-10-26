@@ -14,8 +14,9 @@ import { apimethod, Addcart } from "../../utils/api";
 import { useLocation } from "react-router-dom";
 import Swal from 'sweetalert2';
 
-const ItemsDescription = () => {
+const ItemsDescription = (prop) => {
   const { state } = useLocation();
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const itemWeightString = JSON.parse(state.item_weight);

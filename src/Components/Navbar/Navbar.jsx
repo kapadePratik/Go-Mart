@@ -45,15 +45,12 @@ const Navbar = () => {
   const [quantity, setQuantity] = useState([]);
   const [cart, setCart] = useState([]);
 
-
-
-  const logOut =() => {
-
+  const logOut = () => {
     Swal.fire({
-      title: 'Do you want to logout?',
+      title: "Do you want to logout?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Logout',
+      confirmButtonText: "Logout",
       denyButtonText: `Don't Logout`,
       customClass: {
         container: "custom-swal-container",
@@ -62,11 +59,10 @@ const Navbar = () => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Saved!', '', 'success')
-        
-      } 
-    })
-  }
+        Swal.fire("Saved!", "", "success");
+      }
+    });
+  };
 
   const setvalue = () => {
     var list = [];
@@ -87,13 +83,15 @@ const Navbar = () => {
   };
 
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = async (id) => {
-    // e.preventDefault();
+  // total of products
+  const [discount, setDiscount] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
 
+  const handleSubmit = async (id) => {
     var body = {
       cart_id: id,
     };
@@ -127,18 +125,24 @@ const Navbar = () => {
   const getcartrecord = async () => {
     await apimethod("getCartItem").then((result) => {
       if (result != false) {
-        // setdata(result.data);
-        // setLoading(false);
+        // console.log(result.data);
         setCart(result.data);
       }
-      // setLoading(false);
     });
   };
 
   useEffect(() => {
     getcartrecord();
     setvalue();
+    calculateTotal();
   }, []);
+
+  const calculateTotal = () => {
+    var subtotal = 0;
+
+    const total = cart.map((acc, product) => acc + acc.item_price, 0);
+    return total;
+  };
 
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary nav-body d-flex justify-content-around  ">
@@ -208,14 +212,6 @@ const Navbar = () => {
               class="nav-item me-3 me-lg-0 
              d-flex flex-row ">
               <a class="nav-link text-black " href="#">
-                {/* <Link
-                  to="/addtocart"
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                  }}>
-                  <i class="fas fa-shopping-cart mx-4"></i>
-                </Link> */}
                 <Link
                   to="/favorite"
                   style={{
@@ -241,19 +237,16 @@ const Navbar = () => {
                   <i class="fas fa-user mx-1 text-black profile-icon"></i>
                 </a>
                 <div class="dropdown-menu">
-                 
-                  <Link to='/userprofile' class="dropdown-item dropdown-ltr" >
+                  <Link to="/userprofile" class="dropdown-item dropdown-ltr">
                     PROFILE
                   </Link>
-                  <Link to='/orderlist' class="dropdown-item  dropdown-ltr" >
+                  <Link to="/orderlist" class="dropdown-item  dropdown-ltr">
                     Order List
                   </Link>
-                  <Link to='/favorite' class="dropdown-item  dropdown-ltr" >
+                  <Link to="/favorite" class="dropdown-item  dropdown-ltr">
                     Favourite List
                   </Link>
                   <Link class="dropdown-item  dropdown-ltr" onClick={logOut}>
-
-                    
                     Logout
                   </Link>
                 </div>
@@ -413,11 +406,21 @@ const Navbar = () => {
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Discount
-                      <strong> -255</strong>
+                      <input
+                        type="number"
+                        value={discount}
+                        onChange={(e) =>
+                          setDiscount(parseFloat(e.target.value))
+                        }
+                      />
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0 pb-0 ">
                       Tax
-                      <strong> +55</strong>
+                      <input
+                        type="number"
+                        value={tax}
+                        onChange={(e) => setTax(parseFloat(e.target.value))}
+                      />
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 ">
                       <div>
@@ -428,9 +431,7 @@ const Navbar = () => {
                           Payable amount
                         </strong>
                       </div>
-                      <span>
-                        <strong>$53.98</strong>
-                      </span>
+                      <span>${calculateTotal()}</span>
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center ms-5">

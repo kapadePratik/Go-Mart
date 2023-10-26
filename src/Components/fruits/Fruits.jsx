@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { apimethod, addFavorite } from "../../utils/api";
-import { Rings } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 const Fruits = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [favlist, setFavList] = useState([]);
@@ -135,16 +135,15 @@ const Fruits = () => {
     <>
       {loading ? (
         <div className="loader-container">
-          <Rings
-            height="120"
-            width="120"
-            color="#4fa94d"
-            radius="6"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-            ariaLabel="rings-loading"
-          />
+          <ColorRing
+  visible={true}
+  height="80"
+  width="80"
+  ariaLabel="blocks-loading"
+  wrapperStyle={{}}
+  wrapperClass="blocks-wrapper"
+  colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+/>
         </div>
       ) : (
         <>
@@ -160,7 +159,7 @@ const Fruits = () => {
                 <div class="inner-wrapper">
                   {item.product.product.map((items, index) => (
                     <>
-                      <div class="card mb-3 mt-2">
+                      <div class="card-catogry mb-3 mt-2">
                         <div class="inner-card">
                           <div class="img-wrapper">
                             <div class="position-relative">
@@ -208,11 +207,12 @@ const Fruits = () => {
                             </p>
                           </div>
                           <div class="btn-wrapper">
-                            <button
+                            <Link to='/itemsdescription' state={items}><button
                               class="view-btn"
                               data-src="https://source.unsplash.com/collection/190727/900x600">
                               View
-                            </button>
+                              
+                            </button></Link>
                           </div>
                         </div>
                       </div>
