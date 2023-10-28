@@ -9,7 +9,7 @@ import { IoMdContact } from "react-icons/io";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Link ,useNavigate} from "react-router-dom";
 import { userregister } from "../../utils/api";
-
+import Swal from "sweetalert2";
 const Regitration = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -41,8 +41,9 @@ const Regitration = () => {
     }
     if (newresponse.status == true) {
       setValidationErrors('')
-      window.alert(newresponse.message);
-      nav("/")
+      Swal.fire("Login successfully !");
+        nav("/");
+      
     }
   };
 

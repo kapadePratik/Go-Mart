@@ -394,7 +394,7 @@ textarea:valid ~ label {
   /* border: 1px solid #ccc; */
   /* padding: 16px; */
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  /* transition: border-color 0.2s ease; */
 }
 
 /* .card:hover {

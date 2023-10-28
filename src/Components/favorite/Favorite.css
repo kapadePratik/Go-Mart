@@ -83,3 +83,21 @@
 .delete-icon:hover{
   color: #FF0E03 ;
 }
+.custom-swal-button{
+  width: 100%;
+  color: #FF0E03;
+}
+.button.swal2-confirm.swal2-styled{
+  width: 100%;
+}
+
+.data-notfound{
+  font-size: 18px;
+  font-weight: 600;
+  color: #7c7c7c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+}

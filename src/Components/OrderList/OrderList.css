@@ -1,25 +1,4 @@
-/* // colors
-$red: #c62931; // hsl(357, 66%, 47%)
-$blue: #49aed0; // hsl(195, 59%, 55%)
-$link-blue: hsl(215, 60%, 50%);
-$green: #00a362; // hsl(156, 100%, 32%)
-$orange: #ec9532; // hsl(32, 83%, 56%)
-$yellow: #f5d847; // hsl(50, 90%, 62%)
 
-// shades
-$black: #111822; // hsl(215,32%,10%)
-$carbon: #222c3a; // hsl(215,26%,18%)
-$charcoal: #354050; // hsl(215,20%,26%)
-$pebble: #79879a; // hsl(215,14%,54%)  pebble
-$gray: #a2abb9; // hsl(215,14%,68%)  pale-sky / gull-gray
-$cloud: #d0d5dc; // hsl(215,14%,84%)  mischka / black-85
-$fog: #f0f2f5; // hsl(215,20%,95%)  smoke
-$snow: #f9fafb; // hsl(215,26%,98%)  silver
-$white: #ffffff; // hsl(215,32%,100%)
-
-// social colors
-$facebook: #3b5998;
-$twitter: #00b6f1; */
 
 .list-group {
   border-color: #d0d5dc !important;
@@ -28,18 +7,6 @@ $twitter: #00b6f1; */
   }
 }
 
-/* // *, input, body, a, h1,h2,h3,h4,h5,h6, p {
-//   font-family: "Avenir", arial, sans-serif;
-// }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 500 !important;
-} */
 
 a.account-card {
   text-decoration: none;
@@ -201,13 +168,17 @@ a.account-card {
 }
 
 .btn-primary {
-  background: #c62931;
-  border-color: #c62931;
+  background: #23AA49;
+  border-color: #23AA49;
   cursor: pointer;
-  &:hover {
-    background: lighten(#c62931, 10%);
-    border-color: lighten(#c62931, 10%);
-  }
+  /* &:hover {
+   
+  } */
+}
+
+.btn-primary:hover{
+  background: lighten(#23AA49, 10%);
+  border-color: lighten(#23AA49, 10%);
 }
 
 .btn-secondary {
@@ -392,4 +363,9 @@ a.account-card {
   [type="radio"]:checked ~ label p {
     display: unset;
   }
+}
+
+.orderlist-card{
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 16px;
 }

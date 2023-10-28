@@ -6,7 +6,7 @@ import { MdLocationOn, MdOutlineLocationOn } from "react-icons/md";
 import { BsCart4 } from "react-icons/bs";
 import { IoIosContact, IoMdArrowDropdownCircle } from "react-icons/io";
 import { VscLocation } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { Link, useLocation ,Redirect, Switch } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import logo from "../images/gomartlogo.png";
 import Fade from "react-reveal/Fade";
@@ -24,8 +24,10 @@ import {
   RemoveAddcart,
   getCartItem,
   apigetmethod,
+  Login,
 } from "../../utils/api";
 import Swal from "sweetalert2";
+
 
 const Navbar = () => {
   var btnst = true;
@@ -41,27 +43,39 @@ const Navbar = () => {
     }
   };
 
-  const [count, setCount] = useState(1);
   const [quantity, setQuantity] = useState([]);
   const [cart, setCart] = useState([]);
+  const [change, setChange] = useState({});
+
+  const [sidebar, setSidebar] = useState([]);
+
+  const location = useLocation();
+  const newdis = location.state;
+
+  
 
   const logOut = () => {
-    Swal.fire({
-      title: "Do you want to logout?",
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Logout",
-      denyButtonText: `Don't Logout`,
-      customClass: {
-        container: "custom-swal-container",
-        confirmButton: "custom-swal-confirm-button",
-      },
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
-      }
-    });
+    
+    const accessToken = localStorage.removeItem("token");
+      
+    if(accessToken ) {
+      Swal.fire({
+        title: "Do you want to logout?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Logout",
+        denyButtonText: `Don't Logout`,
+        customClass: {
+          container: "custom-swal-container",
+          confirmButton: "custom-swal-confirm-button",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Saved!", "", "success");
+        }
+      });
+    }
+    
   };
 
   const setvalue = () => {
@@ -71,15 +85,6 @@ const Navbar = () => {
       list.push(data);
     }
     setQuantity(list);
-  };
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  const decrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
   };
 
   const [show, setShow] = useState(false);
@@ -125,7 +130,6 @@ const Navbar = () => {
   const getcartrecord = async () => {
     await apimethod("getCartItem").then((result) => {
       if (result != false) {
-        // console.log(result.data);
         setCart(result.data);
       }
     });
@@ -134,14 +138,84 @@ const Navbar = () => {
   useEffect(() => {
     getcartrecord();
     setvalue();
-    calculateTotal();
+    fetchIdByItemId();
+
+    const initialCart = {};
+    cart.forEach((product) => {
+      initialCart[product.id] = 1;
+    });
+    setChange(initialCart);
   }, []);
 
-  const calculateTotal = () => {
-    var subtotal = 0;
+  // get total of all product
+  // const [count, setCount] = useState({});
 
-    const total = cart.map((acc, product) => acc + acc.item_price, 0);
-    return total;
+  // const handleIncrement = (index) => {
+  //   setCount((prevCount) => ({
+  //     ...prevCount,
+  //     [index]: (prevCount[index] || 0) + 1,
+  //   }));
+  // };
+
+  // const handleDecrement = (index) => {
+  //   if (count[index] > 0) {
+  //     setCount((prevCount) => ({
+  //       ...prevCount,
+  //       [index]: prevCount[index] - 1,
+  //     }));
+  //   }
+  // };
+
+  const handleIncrement = (productId) => {
+    setChange((prevCart) => {
+      const updatedCart = { ...prevCart };
+      updatedCart[productId] = (updatedCart[productId] || 1) + 1;
+      return updatedCart;
+    });
+  };
+
+  const handleDecrement = (productId) => {
+    setChange((prevCart) => {
+      const updatedCart = { ...prevCart };
+      if (updatedCart[productId] > 1) {
+        updatedCart[productId] -= 1;
+      }
+      return updatedCart;
+    });
+  };
+
+  const calculateSubtotal = (productId) => {
+    const quantity = change[productId] || 0;
+    const product = cart.find((p) => p.id === productId);
+    if (product) {
+      return quantity * product.item_price;
+    }
+    return 0;
+  };
+
+  const calculateTotal = () => {
+    return Object.keys(change).reduce((total, productId) => {
+      const subtotal = calculateSubtotal(parseInt(productId, 10));
+      return total + subtotal;
+    }, 0);
+  };
+
+  // getcouponcode id
+  const [dis, setDis] = useState(null);
+
+  const fetchIdByItemId = async () => {
+    var body = {
+      coupan_id: newdis,
+    };
+    const response = await apimethod("getCouponcodeByid", body);
+    if (response.status == true) {
+      console.log(
+        "svjhsdvvgdsyugusd =>" + JSON.stringify(response.data[0].discount)
+      );
+      setDis(response.data[0].discount);
+    } else {
+      // console.error("Data Not Found");
+    }
   };
 
   return (
@@ -325,7 +399,8 @@ const Navbar = () => {
                               </h6>
                             </div>
                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                              <h6 class="mb-0">{item.item_price}</h6>
+                              {/* <h6 class="mb-0">{item.item_price}</h6> */}
+                              <h6 class="mb-0">{calculateSubtotal(item.id)}</h6>
                             </div>
                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                               <i
@@ -334,16 +409,8 @@ const Navbar = () => {
                             </div>
                           </div>
                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex ms-5">
-                            <div className=" cart-icons d-flex align-item-center mt-3 ms-5 ">
-                              <span
-                                className="subtraction-icon "
-                                onClick={() => {
-                                  if (quantity[index] != 1) {
-                                    var data = [...quantity];
-                                    data[index] = data[index] - 1;
-                                    setQuantity(data);
-                                  }
-                                }}>
+                            <div className=" cart-icons d-flex align-item-center mt-3 ms-5  ">
+                              {/* <span className="subtraction-icon ">
                                 <HiMinusCircle
                                   size={30}
                                   color={
@@ -351,23 +418,30 @@ const Navbar = () => {
                                       ? "#23AA49"
                                       : "#DADADA"
                                   }
+                                  onClick={() => handleDecrement(index)}
                                 />
                               </span>
                               <p className="number-cart">
-                                {item.item_quantity[index]}
+                                {count[index] || 1}
                               </p>
-                              <span
-                                className="addition-icon"
-                                onClick={() => {
-                                  var data = [...item.item_quantity];
-                                  data[index] = data[index] + 1;
-                                  setQuantity(data);
-                                }}>
-                                <IoMdAddCircle size={30} />
-                              </span>
+                              <span className="addition-icon">
+                                <IoMdAddCircle
+                                  size={30}
+                                  onClick={() => handleIncrement(index)}
+                                />
+                              </span> */}
+
+                              <button onClick={() => handleDecrement(item.id)}>
+                                -
+                              </button>
+                              {change[item.id] || 1}
+                              <button onClick={() => handleIncrement(item.id)}>
+                                +
+                              </button>
                             </div>
                           </div>
                         </div>
+
                         <hr class="my-4" />
                       </>
                     ))}
@@ -402,25 +476,13 @@ const Navbar = () => {
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 ">
                       Sub Total
-                      <strong>$53.98</strong>
+                      <strong>{calculateTotal()}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                      Discount
-                      <input
-                        type="number"
-                        value={discount}
-                        onChange={(e) =>
-                          setDiscount(parseFloat(e.target.value))
-                        }
-                      />
+                      Discount {newdis}%
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0 pb-0 ">
                       Tax
-                      <input
-                        type="number"
-                        value={tax}
-                        onChange={(e) => setTax(parseFloat(e.target.value))}
-                      />
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 ">
                       <div>
@@ -431,7 +493,7 @@ const Navbar = () => {
                           Payable amount
                         </strong>
                       </div>
-                      <span>${calculateTotal()}</span>
+                      <span> $</span>
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center ms-5">

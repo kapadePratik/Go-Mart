@@ -48,6 +48,7 @@ export const apimethod = async (url, formdata) => {
     );
     return response.data;
   } catch (error) {
+    console.log("Catch Error ==> "+ error);
     return false;
   }
 };

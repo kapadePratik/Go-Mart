@@ -101,6 +101,7 @@ function App()
           <Route exact path="/favorite" element={<Favorite />}></Route>
           <Route exact path="/orderstatus" element={<OrderStatus />}></Route>
           <Route exact path="/orderlist" element={<OrderList />}></Route>
+          <Route exact path="/navbar" element={<Navbar />}></Route>
      
     
         </Routes>

@@ -5,8 +5,10 @@ import "swiper/css/navigation";
 import { Link } from "react-router-dom";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
-import { apimethod, addFavorite } from "../../utils/api";
+import { apimethod, addFavorite,addcart } from "../../utils/api";
 import { ColorRing } from "react-loader-spinner";
+import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
 const Fruits = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [favlist, setFavList] = useState([]);
@@ -17,6 +19,8 @@ const Fruits = () => {
 
   const [likeCount, setLikeCount] = useState(0);
   const [userLiked, setUserLiked] = useState(false);
+  const { state } = useLocation();
+  
 
   const fruitlist = [
     {
@@ -84,7 +88,56 @@ const Fruits = () => {
     });
   };
 
-  const handleLikeDislike = async (items) => {
+
+  const [formData, setFormData] = useState({
+    user_id: "",
+    item_id: "",
+    like_status: "",
+    updated_at: "",
+    created_at: "",
+    id: "",
+    item_expiry_date: "",
+    item_name: "",
+    item_price: "",
+    item_quantity: 1,
+    item_weight: "",
+    item_description: "",
+    dis_item_price: "",
+  });
+
+  const handleAdd = async (e, d1) => {
+    e.preventDefault();
+    const data = {
+      item_id: d1.item_id,
+      item_price: d1.item_price,
+      item_weight: JSON.stringify(d1.item_weight),
+      item_quantity: d1.quantity,
+      item_name: d1.item_name,
+      item_expiry_date: d1.item_expiry_date,
+      item_description: d1.item_description,
+     
+    };
+    const response = await apimethod("Addcart", data);
+    const newresponse = response;
+    console.log(newresponse);
+    if (newresponse.status == true) {
+      Swal.fire({
+        title:"Added in cart successfully!",
+      
+        customClass:{
+          container:"custom-swal-button",
+        
+        }
+      }
+      );
+    }
+  };
+
+
+
+    const [count, setCount] = useState([])
+  const handleLikeDislike = async (items, index) => {
+
     console.log(items);
     try {
         
@@ -131,6 +184,8 @@ const Fruits = () => {
 
   const likeClass = isLiked ? "like-button liked" : "like-button";
 
+  
+
   return (
     <>
       {loading ? (
@@ -148,7 +203,7 @@ const Fruits = () => {
       ) : (
         <>
           <div class="wrapper">
-            {data.map((item, i) => (
+            {data.map((item, i,obj) => (
               <div class="container">
                 <p>{item.catname}</p>
                 <div class="d-flex flex-row-reverse view-allitems">
@@ -170,8 +225,10 @@ const Fruits = () => {
                                 }
                               />
                               <a
-                                href="#"
-                                class="btn btn-primary position-absolute top-0 start-0 translate-right">
+                              
+                                class="btn btn-primary position-absolute top-0 start-0 translate-right"
+                                onClick={(e) => handleAdd(e, obj)}
+                                >
                                 Add To cart
                               </a>
                               <a

@@ -4,13 +4,13 @@ import carot from "../images/carot.jpeg";
 import kiwi from "../images/kiwi.jpg";
 import redchilli from "../images/red-chilli.jpeg";
 import roomcleaner from "../images/room-cleaner.jpg";
-import { apimethod, RemoveFavorite,Addcart } from "../../utils/api";
+import { apimethod, RemoveFavorite, Addcart } from "../../utils/api";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 
 const Favorite = () => {
-  const {state} = useLocation();
+  const { state } = useLocation();
 
   const [favorite, setFavorite] = useState([]);
   const [fav, setFav] = useState([]);
@@ -21,20 +21,20 @@ const Favorite = () => {
 
   const [formData, setFormData] = useState({
     user_id: "",
-    item_id: state.item_id,
+    item_id: "",
     like_status: "",
     updated_at: "",
     created_at: "",
     id: "",
-    item_expiry_date:state.item_expiry_date,
-    item_name:state.item_name,
-    item_price:state.item_price,
-    item_quantity:1,
-    item_weight:state.item_weight,
-    item_description: state.item_description,
-    dis_item_price: state.dis_item_price,
-
+    item_expiry_date: "",
+    item_name: "",
+    item_price: "",
+    item_quantity: 1,
+    item_weight: "",
+    item_description: "",
+    dis_item_price: "",
   });
+  console.log(JSON.stringify(state));
 
   const getfavorite = async () => {
     await apimethod("getFavoriteList").then((result) => {
@@ -83,25 +83,53 @@ const Favorite = () => {
     }
   };
 
-  const handleAdd = async (e) => {
+  const handleAdd = async (e, d1) => {
     e.preventDefault();
-    try {
-      const response = await apimethod("Addcart", formData);
-      const newresponse = response;
-      console.log(newresponse);
+    const data = {
+      item_id: d1.item_id,
+      item_price: d1.item_price,
+      item_weight: JSON.stringify(d1.item_weight),
+      item_quantity: d1.quantity,
+      item_name: d1.item_name,
+      item_expiry_date: d1.item_expiry_date,
+      item_description: d1.item_description,
+      // item_id: '3',
+      // item_price: '400',
+      // item_weight: ['1kg'],
+      // item_quantity: 2,
+      // item_name: 'apple',
+      // item_expiry_date: '2023-12-15',
+    };
 
-      if (newresponse.status == true) {
-        // window.alert(newresponse.message);
-        Swal.fire('Added in cart successfully!')
+    // console.log("Send Data====> ", JSON.stringify(data));
+    const response = await apimethod("Addcart", data);
+    const newresponse = response;
+    console.log(newresponse);
+    if (newresponse.status == true) {
+      Swal.fire({
+        title:"Added in cart successfully!",
+      
+        customClass:{
+          container:"custom-swal-button",
+        
+        }
       }
-    } catch (error) {
-      console.log(error);
+      );
     }
   };
 
   return (
     <div className="container">
       <div className="row d-flex justify-content-center">
+
+        { favorite.length === 0 ? (
+          <p className="data-notfound">No data found <br/>
+          Please Add item to Favorite
+          </p>
+          
+        ):(
+          
+       
         <div
           className="new-card bg-white mt-5"
           style={{
@@ -127,7 +155,10 @@ const Favorite = () => {
                       <br />
                     </div>
                     <div className="fav-itemname">{obj.item_price}</div>
-                    <button className="fav-btn w-25" onClick={handleAdd}>
+
+                    <button
+                      className="fav-btn w-25"
+                      onClick={(e) => handleAdd( obj)}>
                       Add Cart
                     </button>
                     <div
@@ -137,7 +168,7 @@ const Favorite = () => {
                       }}>
                       <RiDeleteBinLine
                         size={30}
-                        onClick={() => handleRemove(obj.id)}
+                        onClick={(e) => handleRemove( obj.id)}
                       />
                     </div>
                   </div>
@@ -146,6 +177,8 @@ const Favorite = () => {
               ))}
           </div>
         </div>
+         )
+        } 
       </div>
     </div>
   );
