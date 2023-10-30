@@ -12,21 +12,20 @@ import calender from "../images/calender.png.png";
 import calories from "../images/calories.png.png";
 import { apimethod, Addcart } from "../../utils/api";
 import { useLocation } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const ItemsDescription = (prop) => {
-  const { state } = useLocation();
-  
+  const { navigate } = useLocation();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const itemWeightString = JSON.parse(state.item_weight);
+  const itemWeightString = JSON.parse(navigate.item_weight);
 
   const [count, setCount] = useState(1);
 
   const increment = () => {
     setCount(count + 1);
   };
-
 
   const decrement = () => {
     if (count > 0) {
@@ -40,50 +39,45 @@ const ItemsDescription = (prop) => {
   };
 
   const [formData, setFormData] = useState({
-    item_id: state.item_id,
+    item_id: navigate.item_id,
     item_quantity: count,
-    item_name: state.item_name,
-    item_price: state.item_price,
-    item_description: state.item_description,
-    dis_item_price: state.dis_item_price,
-    item_expiry_date: state.item_expiry_date,
-    item_weight: state.item_weight,
+    item_name: navigate.item_name,
+    item_price: navigate.item_price,
+    item_description: navigate.item_description,
+    dis_item_price: navigate.dis_item_price,
+    item_expiry_date: navigate.item_expiry_date,
+    item_weight: navigate.item_weight,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
-      const token = localStorage.getItem('token');
-  
-      if (token == null) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'You have to LOGIN first',
-          customClass:{
-             container:"custom-swal-button"
-          }
-          
-        })
-        // window.alert("you dont have login");
-      } else {
-        try {
-          const response = await apimethod("Addcart", formData);
-          const newresponse = response;
-          console.log(newresponse);
-    
-          if (newresponse.status == true) {
-            // window.alert(newresponse.message);
-            Swal.fire('Added in cart successfully!')
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    
-    
+    const token = localStorage.getItem("token");
 
+    if (token == null) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You have to LOGIN first",
+        customClass: {
+          container: "custom-swal-button",
+        },
+      });
+      // window.alert("you dont have login");
+    } else {
+      try {
+        const response = await apimethod("Addcart", formData);
+        const newresponse = response;
+        console.log(newresponse);
+
+        if (newresponse.status == true) {
+          // window.alert(newresponse.message);
+          Swal.fire("Added in cart successfully!");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -101,14 +95,14 @@ const ItemsDescription = (prop) => {
               value="item_image"
               src={
                 "https://gomart.thecompletesoftech.in/uploads/" +
-                state.item_image
+                navigate.item_image
               }
               width={500}
               height={500}
             />
 
             <div className="col-lg-10  item-description ">
-              <p className="  ms-5 mt-2">{state.item_description}</p>
+              <p className="  ms-5 mt-2">{navigate.item_description}</p>
             </div>
             <div className="d-flex justify-content-center">
               <button
@@ -122,7 +116,7 @@ const ItemsDescription = (prop) => {
           <div className="col-lg-6">
             <div className="item-section">
               <span className="item-name" value="item_name">
-                {state.item_name}
+                {navigate.item_name}
               </span>
               <div className="item-selection">
                 <div className="row mt-5">
@@ -162,7 +156,7 @@ const ItemsDescription = (prop) => {
                           </div>
                           <div className="col-lg-5">
                             <label className="green-color">
-                              {state.item_expiry_date}
+                              {navigate.item_expiry_date}
                             </label>
                             <small className="grey-color ">Expiration</small>
                           </div>
@@ -188,7 +182,7 @@ const ItemsDescription = (prop) => {
                           </div>
                           <div className="col-lg-4">
                             <label className="green-color">
-                              {state.rating}
+                              {navigate.rating}
                             </label>
                             <small className="grey-color">Reviews</small>
                           </div>
@@ -247,7 +241,7 @@ const ItemsDescription = (prop) => {
                   </div>
                   <div className="col-lg-2">
                     <label className="select-content ">
-                      ${state.item_price}
+                      ${navigate.item_price}
                     </label>
                   </div>
                 </div>

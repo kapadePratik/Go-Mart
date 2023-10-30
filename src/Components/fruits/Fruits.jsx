@@ -5,7 +5,8 @@ import "swiper/css/navigation";
 import { Link } from "react-router-dom";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
-import { apimethod, addFavorite,addcart } from "../../utils/api";
+import { BsCartPlusFill } from "react-icons/bs";
+import { apimethod, addFavorite, addcart } from "../../utils/api";
 import { ColorRing } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
@@ -20,7 +21,6 @@ const Fruits = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [userLiked, setUserLiked] = useState(false);
   const { state } = useLocation();
-  
 
   const fruitlist = [
     {
@@ -88,7 +88,6 @@ const Fruits = () => {
     });
   };
 
-
   const [formData, setFormData] = useState({
     user_id: "",
     item_id: "",
@@ -115,42 +114,35 @@ const Fruits = () => {
       item_name: d1.item_name,
       item_expiry_date: d1.item_expiry_date,
       item_description: d1.item_description,
-     
     };
     const response = await apimethod("Addcart", data);
     const newresponse = response;
     console.log(newresponse);
     if (newresponse.status == true) {
       Swal.fire({
-        title:"Added in cart successfully!",
-      
-        customClass:{
-          container:"custom-swal-button",
-        
-        }
-      }
-      );
+        title: "Added in cart successfully!",
+
+        customClass: {
+          container: "custom-swal-button",
+        },
+      });
     }
   };
 
-
-
-    const [count, setCount] = useState([])
+  const [count, setCount] = useState([]);
   const handleLikeDislike = async (items, index) => {
-
     console.log(items);
     try {
-        
-        const body={
-           item_id:1,
-           like_status:1,
-        }
+      const body = {
+        item_id: 1,
+        like_status: 1,
+      };
 
-      await apimethod('addFavorite',body); 
+      await apimethod("addFavorite", body);
       setLikeCount(userLiked ? likeCount - 1 : likeCount + 1);
       setUserLiked(!userLiked);
     } catch (error) {
-      console.error('Error liking/disliking:', error);
+      console.error("Error liking/disliking:", error);
     }
   };
 
@@ -184,28 +176,26 @@ const Fruits = () => {
 
   const likeClass = isLiked ? "like-button liked" : "like-button";
 
-  
-
   return (
     <>
       {loading ? (
         <div className="loader-container">
           <ColorRing
-  visible={true}
-  height="80"
-  width="80"
-  ariaLabel="blocks-loading"
-  wrapperStyle={{}}
-  wrapperClass="blocks-wrapper"
-  colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-/>
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
         </div>
       ) : (
         <>
           <div class="wrapper">
-            {data.map((item, i,obj) => (
+            {data.map((item, i, obj) => (
               <div class="container">
-                <p>{item.catname}</p>
+                <p className="cat-name ">{item.catname}</p>
                 <div class="d-flex flex-row-reverse view-allitems">
                   <Link to={`/fruitspage/${item.cat_id}`} className="link-tag">
                     VIEW ALL
@@ -214,10 +204,10 @@ const Fruits = () => {
                 <div class="inner-wrapper">
                   {item.product.product.map((items, index) => (
                     <>
-                      <div class="card-catogry mb-3 mt-2">
+                      <div class="card card-catogry mb-3 mt-2 ms-3">
                         <div class="inner-card">
                           <div class="img-wrapper">
-                            <div class="position-relative">
+                            <div className="category-img">
                               <img
                                 src={
                                   "https://gomart.thecompletesoftech.in/uploads/" +
@@ -225,51 +215,71 @@ const Fruits = () => {
                                 }
                               />
                               <a
-                              
-                                class="btn btn-primary position-absolute top-0 start-0 translate-right"
-                                onClick={(e) => handleAdd(e, obj)}
-                                >
-                                Add To cart
-                              </a>
-                              <a
-                                style={{
-                                  color: "black",
-                                }}
-                                class="position-absolute top-10  translate-right"
-                                className={likeClass}
-                                onClick={() => handleLikeClick(i)}>
-                                  
-                                {favlist[i] == true ? (
-                                  
-                                  <AiFillHeart
-                                  onClick={() => handleLikeDislike(items)}
-                                    size={35}
-                                    className="heart-icon heart-desktopview"
-                                    style={{ color: "red" }}
-                                  />
-                                ) : (
-                                  <BsHeart
-                                    size={35}
-                                    className="heart-icon heart-desktopview "
-                                  />
-                                )}
+                                class="btn btn-primary position-absolute top-0 start-0 translate-right mt-2 ms-2"
+                                onClick={(e) => handleAdd(e, obj)}>
+                                Add To{" "}
+                                <BsCartPlusFill size={23} className="ms-1" />
                               </a>
                             </div>
                           </div>
-                          <div class="content">
-                            <h1>{items.item_name}</h1>
+                          <div class="content mt-5">
+                            <h1 className="category-text">{items.item_name}</h1>
                             <p>
                               Lorem, ipsum dolor sit amet consectetur
                               adipisicing elit. Incidunt, dolore!
                             </p>
                           </div>
-                          <div class="btn-wrapper">
-                            <Link to='/itemsdescription' state={items}><button
-                              class="view-btn"
+
+                          <div className="p-2">
+                            <span
+                              style={{
+                                float: "left",
+                                color: "black",
+                                paddingBottom: "4%",
+                              }}>
+                              <Link
+                                to="/itemsdescription"
+                                navigate={items}
+                                style={{
+                                  textDecoration: "none",
+                                  backgroundColor: "#23aa49",
+                                }}
+                                class="btn btn-success pt-2 w-100"
+                                data-src="https://source.unsplash.com/collection/190727/900x600">
+                                View
+                              </Link>
+                            </span>
+
+                            {/* <Link to="/itemsdescription" navigate={items}>
+                            <button
+                              class=" w-25 mt-5 mb-2 ms-2"
                               data-src="https://source.unsplash.com/collection/190727/900x600">
                               View
-                              
-                            </button></Link>
+                            </button>
+                          </Link> */}
+
+                            <span
+                              style={{
+                                float: "right",
+                                color: "black",
+                                paddingBottom: "4%",
+                              }}
+                              className={likeClass}
+                              onClick={() => handleLikeClick(i)}>
+                              {favlist[i] == true ? (
+                                <AiFillHeart
+                                  onClick={() => handleLikeDislike(items)}
+                                  size={35}
+                                  className="heart-icon heart-desktopview"
+                                  style={{ color: "red" }}
+                                />
+                              ) : (
+                                <BsHeart
+                                  size={35}
+                                  className="heart-icon heart-desktopview "
+                                />
+                              )}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -281,70 +291,6 @@ const Fruits = () => {
           </div>
         </>
       )}
-      {/* <div className="category">
-        {data.map((item, i) => (
-          <div className="container ">
-            <div className="category-header d-flex flex-row mt-5 fruits-name">
-              <p>{item.catname}</p>
-            </div>
-            <div class="d-flex flex-row-reverse view-allitems">
-              <Link to={`/fruitspage/${item.cat_id}`} className="link-tag">
-                VIEW ALL
-              </Link>
-            </div>
-            <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3 mt-2">
-              {item.product.product.map((items, index) => (
-                <div class="col">
-                  <div class="card new-card-css">
-                    {" "}
-                    <div class=" gap-3 icon">
-                      <button className="btn btn-success ">Add to Cart</button>
-                      <div
-                        className={likeClass}
-                        onClick={() => handleLikeClick(i)}>
-                        {favlist[i] == true ? (
-                          <AiFillHeart
-                            size={35}
-                            className="heart-icon heart-desktopview"
-                            style={{ color: "red" }}
-                          />
-                        ) : (
-                          <BsHeart
-                            size={35}
-                            className="heart-icon heart-desktopview "
-                          />
-                        )}
-                      </div>
-                    </div>
-                    <div className="card-img">
-                      <Link to={"/itemsdescription"} state={items}>
-                        {" "}
-                        <img
-                          className=""
-                          src={
-                            "https://gomart.thecompletesoftech.in/uploads/" +
-                            items.item_image
-                          }
-                          alt=""
-                          style={{
-                            width: "100%",
-                            height: "50vh",
-                          }}
-                        />
-                      </Link>
-                    </div>
-                    <span className="float-left item-namestyle">
-                      {items.item_name} / {items.item_weight}kg
-                    </span>
-                    <h5> &#8377; {items.item_price}</h5>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div> */}
-
     </>
   );
 };

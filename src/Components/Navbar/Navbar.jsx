@@ -104,6 +104,7 @@ const Navbar = () => {
     try {
       const response = await apimethod("RemoveAddcart", body);
       const newresponse = response;
+
       if (newresponse.status == true) {
         Swal.fire({
           icon: "success",
@@ -200,6 +201,8 @@ const Navbar = () => {
     }, 0);
   };
 
+ 
+
   // getcouponcode id
   const [dis, setDis] = useState(null);
 
@@ -217,6 +220,8 @@ const Navbar = () => {
       // console.error("Data Not Found");
     }
   };
+
+  
 
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary nav-body d-flex justify-content-around  ">
@@ -376,7 +381,10 @@ const Navbar = () => {
                         }}>
                         Shopping Card
                       </span>
-                      <span class="mb-0 text-muted">3 items</span>
+                      <span class="mb-0 text-muted mt-3"><i class="fa-solid fa-xmark"style={{
+                        fontSize:"23px",
+                        cursor:"pointer",
+                      }} className="cross-mark"></i></span>
                     </div>
                     <hr class="my-2" />
 
@@ -404,13 +412,13 @@ const Navbar = () => {
                             </div>
                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                               <i
-                                class="fas fa-times"
+                                class="fa-solid fa-trash" 
                                 onClick={() => handleSubmit(item.id)}></i>
                             </div>
                           </div>
                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex ms-5">
                             <div className=" cart-icons d-flex align-item-center mt-3 ms-5  ">
-                              {/* <span className="subtraction-icon ">
+                              <span className="subtraction-icon ">
                                 <HiMinusCircle
                                   size={30}
                                   color={
@@ -418,26 +426,26 @@ const Navbar = () => {
                                       ? "#23AA49"
                                       : "#DADADA"
                                   }
-                                  onClick={() => handleDecrement(index)}
+                                onClick={() => handleDecrement(item.id)}
                                 />
                               </span>
                               <p className="number-cart">
-                                {count[index] || 1}
+                                {change[item.id] || 1}
                               </p>
                               <span className="addition-icon">
                                 <IoMdAddCircle
                                   size={30}
-                                  onClick={() => handleIncrement(index)}
+                                 onClick={() => handleIncrement(item.id)}
                                 />
-                              </span> */}
+                              </span>
 
-                              <button onClick={() => handleDecrement(item.id)}>
+                              {/* <button onClick={() => handleDecrement(item.id)}>
                                 -
                               </button>
                               {change[item.id] || 1}
                               <button onClick={() => handleIncrement(item.id)}>
                                 +
-                              </button>
+                              </button> */}
                             </div>
                           </div>
                         </div>
@@ -460,13 +468,36 @@ const Navbar = () => {
                         </h5>
                       </div>
                       <br />
-                      <div className="d-flex justify-content-center ms-5">
+                       <div className="">
+                       {/* <input id="input" />
+                       <div className="">
                         <Link to="/cartoffers">
                           <button className=" signin-btn w-100 fs-8 ms-5 apply-btn ">
                             Apply
                           </button>
                         </Link>
-                      </div>
+                      </div> */}
+
+<div class="row">
+    <div class="col ms-5">
+       <input id="input" className="w-100"
+       placeholder="Enter promo code here"
+       />
+    </div>
+    <div class="col">
+    <Link to="/cartoffers">
+                          <button className=" signin-btn  fs-8 ms-5 apply-btn w-75 ">
+                            Apply
+                          </button>
+                        </Link>
+    </div>
+  
+  </div>
+                       </div>
+                     
+
+
+                      
                     </div>
                   </div>
                 </div>
@@ -476,11 +507,14 @@ const Navbar = () => {
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 ">
                       Sub Total
-                      <strong>{calculateTotal()}</strong>
+                      <strong className="price-item">{calculateTotal()}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Discount {newdis}%
+                      <span className="price-item"> - {calculateTotal() *newdis / 100 }</span> 
                     </li>
+
+                   
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0 pb-0 ">
                       Tax
                     </li>
@@ -493,7 +527,7 @@ const Navbar = () => {
                           Payable amount
                         </strong>
                       </div>
-                      <span> $</span>
+                      <span className="price-item"> { calculateTotal() - calculateTotal() *newdis / 100 }</span>
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center ms-5">

@@ -48,7 +48,7 @@ const Main = () => {
       <Banner />
       <Category />
       <Fruits />
-      {/* <Offers /> */}
+      <Offers />
       {/* <Vegitables />
       <HouseholdProducts />
       <NotifiedPage /> */}

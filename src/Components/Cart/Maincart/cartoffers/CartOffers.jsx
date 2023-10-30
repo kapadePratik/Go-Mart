@@ -6,9 +6,11 @@ import { Navigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { apimethod, getCouponcode } from "../../../../utils/api";
+import Navbar from "../../../Navbar/Navbar";
 
 const CartOffers = () => {
   const [coupon, setCoupon] = useState([]);
+  const [copySuccess, setCopySuccess] = useState(null);
 
   const getcoupon = async () => {
     await apimethod("getCouponcode").then((result) => {
@@ -29,9 +31,28 @@ const CartOffers = () => {
   const handleApplyClick = (index) => {
     setSelectedPromoIndex(index);
   };
+
+  // coupon card functionality
+
+  const handleCopyCode = (code, index) => {
+    const textField = document.createElement("textarea");
+    textField.innerText = code;
+    document.body.appendChild(textField);
+    textField.select();
+
+    try {
+      document.execCommand("copy");
+      setCopySuccess(index);
+    } catch (err) {
+      console.error("Failed to copy coupon code: ", err);
+    }
+
+    document.body.removeChild(textField);
+  };
+
   return (
     <>
-      <div class="offers-container offers-mobileview">
+      {/* <div class="offers-container offers-mobileview">
         <div className="row">
           <div className="col-md-4">
             {coupon &&
@@ -76,6 +97,50 @@ const CartOffers = () => {
                 </>
               ))}
           </div>
+        </div>
+      </div> */}
+
+      <Navbar />
+      <div class="container">
+        <div className="row">
+          {coupon &&
+            coupon.map((obj, index) => (
+              <div className="col-6 mt-5" key={index}>
+                <div class="coupon-card">
+                  <img
+                    src={
+                      "https://gomart.thecompletesoftech.in/uploads/" +
+                      obj.coupon_image
+                    }
+                    style={{
+                      width: 100,
+                      height: 100,
+                    }}
+                    class="logo"
+                  />
+                  <h3>
+                    {obj.discount + "%"} {obj.coupon_desc}
+                  </h3>
+                  <div class="coupon-row">
+                    <span id="newcpnCode">{obj.coupan_code}</span>
+                    <span
+                      id="cpnCode"
+                      onClick={() => handleCopyCode(obj.coupan_code, index)}
+                      style={{
+                        cursor: "pointer",
+                      }}>
+                      Copy Code
+                    </span>
+                  </div>
+                  {copySuccess === index && (
+                    <p style={{ color: "red" }}>code copied</p>
+                  )}
+                  <p>Valid Till: 20Dec, 2021</p>
+                  <div class="circle1"></div>
+                  <div class="circle2"></div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </>

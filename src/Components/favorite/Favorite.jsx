@@ -13,6 +13,7 @@ const Favorite = () => {
   const { state } = useLocation();
 
   const [favorite, setFavorite] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
   const [fav, setFav] = useState([]);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,9 +53,9 @@ const Favorite = () => {
     getfavorite();
   }, []);
 
-  const handleRemove = async (item) => {
+  const handleRemove = async (id) => {
     var body = {
-      id: item,
+      id: id,
     };
 
     try {
@@ -70,9 +71,11 @@ const Favorite = () => {
             confirmButton: "custom-swal-confirm-button",
           },
         });
+        setFav((fav) => fav.filter((record) => record.id !== id));
+        // window.location.reload();
       }
 
-      setFav((cart) => cart.filter((record) => record.item !== item));
+
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -83,7 +86,7 @@ const Favorite = () => {
     }
   };
 
-  const handleAdd = async (e, d1) => {
+  const handleAdd = async (e,d1) => {
     e.preventDefault();
     const data = {
       item_id: d1.item_id,
@@ -120,8 +123,8 @@ const Favorite = () => {
 
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center">
-
+      <div className="row ">
+      <div class="col-sm-12 align-self-center"> 
         { favorite.length === 0 ? (
           <p className="data-notfound">No data found <br/>
           Please Add item to Favorite
@@ -155,12 +158,14 @@ const Favorite = () => {
                       <br />
                     </div>
                     <div className="fav-itemname">{obj.item_price}</div>
-
-                    <button
-                      className="fav-btn w-25"
-                      onClick={(e) => handleAdd( obj)}>
+                        
+                        <button
+                      className="fav-btn w-25 ms-3"
+                      onClick={(e) => handleAdd(e,obj)}>
                       Add Cart
                     </button>
+                     
+                   
                     <div
                       className="delete-icon"
                       style={{
@@ -168,7 +173,7 @@ const Favorite = () => {
                       }}>
                       <RiDeleteBinLine
                         size={30}
-                        onClick={(e) => handleRemove( obj.id)}
+                        onClick={(e) => handleRemove(obj.id)}
                       />
                     </div>
                   </div>
@@ -179,6 +184,7 @@ const Favorite = () => {
         </div>
          )
         } 
+      </div>
       </div>
     </div>
   );

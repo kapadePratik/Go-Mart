@@ -381,7 +381,7 @@
   }
 
   .apply-btn{
-    border-radius: 25px;
+    border-radius: 10px;
   }
 
   .dropdown-ltr{
@@ -402,3 +402,21 @@
   /* .card {
     flex-basis: auto;
   } */
+
+  .price-item{
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+  }
+
+  #input {
+    outline: none;
+    text-decoration: none;
+    border-style: solid;
+    border-color: #5D6D7E ;
+    border-radius: 10px;
+    padding: 0.5em;
+    width: 150px;
+  }
+  
+  
