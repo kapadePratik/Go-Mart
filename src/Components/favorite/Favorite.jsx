@@ -54,39 +54,30 @@ const Favorite = () => {
   }, []);
 
   const handleRemove = async (id) => {
+    
     var body = {
       id: id,
     };
 
-    try {
-      const response = await apimethod("RemoveFavorite", body);
-      const newresponse = response;
-      if (newresponse.status == true) {
-        Swal.fire({
-          icon: "success",
-          title: "Item Removed",
-          text: "The item has been deleted successfully.",
-          customClass: {
-            container: "custom-swal-container",
-            confirmButton: "custom-swal-confirm-button",
-          },
-        });
-        setFav((fav) => fav.filter((record) => record.id !== id));
-        // window.location.reload();
-      }
-
-
-    } catch (error) {
+    const response = await apimethod("RemoveFavorite", body);
+    const newresponse = response;
+    
+    if (newresponse.status == true) 
+    {
       Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "An error occurred while deleting the record.",
+        icon: "success",
+        title: "Item Removed",
+        text: "The item has been deleted successfully.",
+        customClass: {
+          container: "custom-swal-container",
+          confirmButton: "custom-swal-confirm-button",
+        },
       });
-      console.log(error);
+      setFavorite((favorite) => favorite.filter((record) => record.id !== id));
     }
   };
 
-  const handleAdd = async (e,d1) => {
+  const handleAdd = async (e, d1) => {
     e.preventDefault();
     const data = {
       item_id: d1.item_id,
@@ -96,95 +87,89 @@ const Favorite = () => {
       item_name: d1.item_name,
       item_expiry_date: d1.item_expiry_date,
       item_description: d1.item_description,
-      // item_id: '3',
-      // item_price: '400',
-      // item_weight: ['1kg'],
-      // item_quantity: 2,
-      // item_name: 'apple',
-      // item_expiry_date: '2023-12-15',
     };
 
-    // console.log("Send Data====> ", JSON.stringify(data));
     const response = await apimethod("Addcart", data);
     const newresponse = response;
     console.log(newresponse);
     if (newresponse.status == true) {
       Swal.fire({
-        title:"Added in cart successfully!",
-      
-        customClass:{
-          container:"custom-swal-button",
-        
-        }
-      }
-      );
+        title: "Added in cart successfully!",
+        customClass: {
+          container: "custom-swal-button",
+          confirmButton: "custom-swal-confirm-button",
+        },
+      });
     }
   };
 
   return (
     <div className="container">
       <div className="row ">
-      <div class="col-sm-12 align-self-center"> 
-        { favorite.length === 0 ? (
-          <p className="data-notfound">No data found <br/>
-          Please Add item to Favorite
-          </p>
-          
-        ):(
-          
-       
-        <div
-          className="new-card bg-white mt-5"
-          style={{
-            border: "none",
-          }}>
-          <div className="card-body favcard-border">
-            {favorite &&
-              favorite.map((obj, index) => (
-                <>
-                  <div className="favorite-item" key={index}>
-                    <img
-                      src={
-                        "https://gomart.thecompletesoftech.in/uploads/" +
-                        obj.item_image
-                      }
-                      className="d-flex justify-content-start"
-                      alt=""
-                      width={100}
-                      height={100}
-                    />
-                    <div>
-                      <label className="fav-itemname">{obj.item_name}</label>
-                      <br />
-                    </div>
-                    <div className="fav-itemname">{obj.item_price}</div>
-                        
-                        <button
-                      className="fav-btn w-25 ms-3"
-                      onClick={(e) => handleAdd(e,obj)}>
-                      Add Cart
-                    </button>
-                     
-                   
-                    <div
-                      className="delete-icon"
-                      style={{
-                        marginRight: "55px",
-                      }}>
-                      <RiDeleteBinLine
-                        size={30}
-                        onClick={(e) => handleRemove(obj.id)}
-                      />
-                    </div>
-                  </div>
-                  <hr />
-                </>
-              ))}
-          </div>
+        <div class="col-lg-12 align-self-center">
+          {favorite.length === 0 ? (
+            <p className="data-notfound">
+              No data found <br />
+              Please Add item to Favorite
+            </p>
+          ) : (
+            <div
+              className="new-card bg-white mt-5"
+              style={{
+                border: "none",
+              }}>
+              <div className="card-body favcard-border">
+                {favorite &&
+                  favorite.map((obj, index) => (
+                    <>
+                      <div className="favorite-item pt-3" key={index}>
+                        <img
+                          src={
+                            "https://gomart.thecompletesoftech.in/uploads/" +
+                            obj.item_image
+                          }
+                          className="d-flex ms-3"
+                          alt=""
+                          width={70}
+                          height={70}
+                        />
+                        <div>
+                          <label className="fav-itemname">
+                            {obj.item_name}
+                          </label>
+                          <br />
+                        </div>
+                        <div className="fav-itemname">{obj.item_price}</div>
+
+                        <a
+                          className="btn btn-success ms-2"
+                          style={{
+                            fontSize:'15px',
+                            display:'flex',
+                            backgroundColor:'#23aa49'
+                          }}
+                          onClick={(e) => handleAdd(e, obj)}>
+                          Add Cart
+                        </a>
+
+                        <div
+                          className="delete-icon ms-2"
+                          style={{
+                            marginRight: "55px",
+                          }}>
+                          <RiDeleteBinLine
+                            size={30}
+                            onClick={(e) => handleRemove(obj.id)}
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                    </>
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
-         )
-        } 
-      </div>
       </div>
     </div>
   );

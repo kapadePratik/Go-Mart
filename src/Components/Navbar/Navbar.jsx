@@ -6,7 +6,13 @@ import { MdLocationOn, MdOutlineLocationOn } from "react-icons/md";
 import { BsCart4 } from "react-icons/bs";
 import { IoIosContact, IoMdArrowDropdownCircle } from "react-icons/io";
 import { VscLocation } from "react-icons/vsc";
-import { Link, useLocation ,Redirect, Switch } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  Redirect,
+  Switch,
+  useNavigate,
+} from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import logo from "../images/gomartlogo.png";
 import Fade from "react-reveal/Fade";
@@ -27,7 +33,6 @@ import {
   Login,
 } from "../../utils/api";
 import Swal from "sweetalert2";
-
 
 const Navbar = () => {
   var btnst = true;
@@ -52,13 +57,11 @@ const Navbar = () => {
   const location = useLocation();
   const newdis = location.state;
 
-  
-
   const logOut = () => {
     
     const accessToken = localStorage.removeItem("token");
-      
-    if(accessToken ) {
+
+    if (accessToken !=null) {
       Swal.fire({
         title: "Do you want to logout?",
         showDenyButton: true,
@@ -75,7 +78,6 @@ const Navbar = () => {
         }
       });
     }
-    
   };
 
   const setvalue = () => {
@@ -148,24 +150,6 @@ const Navbar = () => {
     setChange(initialCart);
   }, []);
 
-  // get total of all product
-  // const [count, setCount] = useState({});
-
-  // const handleIncrement = (index) => {
-  //   setCount((prevCount) => ({
-  //     ...prevCount,
-  //     [index]: (prevCount[index] || 0) + 1,
-  //   }));
-  // };
-
-  // const handleDecrement = (index) => {
-  //   if (count[index] > 0) {
-  //     setCount((prevCount) => ({
-  //       ...prevCount,
-  //       [index]: prevCount[index] - 1,
-  //     }));
-  //   }
-  // };
 
   const handleIncrement = (productId) => {
     setChange((prevCart) => {
@@ -201,8 +185,6 @@ const Navbar = () => {
     }, 0);
   };
 
- 
-
   // getcouponcode id
   const [dis, setDis] = useState(null);
 
@@ -217,11 +199,47 @@ const Navbar = () => {
       );
       setDis(response.data[0].discount);
     } else {
-      // console.error("Data Not Found");
+      console.error("Data Not Found");
     }
   };
 
-  
+  // apply coupon code
+
+  // const handleChange = (e) => {
+  // const { name, value } = e.target;
+  // setFormData({ ...body, [name]: value });
+  // };
+
+  const [coupon_code, setcouon_code] = useState();
+  const [validationErrors, setValidationErrors] = useState({});
+  const [storediscountvalue, setdiscountvalue] = useState(0);
+  const nav = useNavigate();
+
+  const handleApplycode = async (e) => {
+    e.preventDefault();
+    const body = {
+      coupon_code: coupon_code,
+    };
+
+    const response = await apimethod("applycouponcode", body);
+    const newresponse = response;
+    setdiscountvalue(response.data.discount);
+    setcouon_code('');
+    // console.log(response.data.discount);
+
+    if (newresponse.status == false) {
+      setValidationErrors(newresponse.errors);
+    }
+
+    if (newresponse.status == true) {
+      Swal.fire("Applied successfully !");
+      nav("/");
+    } else {
+      Swal.fire("Not Applied !");
+      nav("/");
+    
+    }
+  };
 
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary nav-body d-flex justify-content-around  ">
@@ -381,10 +399,15 @@ const Navbar = () => {
                         }}>
                         Shopping Card
                       </span>
-                      <span class="mb-0 text-muted mt-3"><i class="fa-solid fa-xmark"style={{
-                        fontSize:"23px",
-                        cursor:"pointer",
-                      }} className="cross-mark"></i></span>
+                      <span class="mb-0 text-muted mt-3">
+                        <i
+                          class="fa-solid fa-xmark"
+                          style={{
+                            fontSize: "23px",
+                            cursor: "pointer",
+                          }}
+                          className="cross-mark"></i>
+                      </span>
                     </div>
                     <hr class="my-2" />
 
@@ -412,7 +435,7 @@ const Navbar = () => {
                             </div>
                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                               <i
-                                class="fa-solid fa-trash" 
+                                class="fa-solid fa-trash"
                                 onClick={() => handleSubmit(item.id)}></i>
                             </div>
                           </div>
@@ -426,7 +449,7 @@ const Navbar = () => {
                                       ? "#23AA49"
                                       : "#DADADA"
                                   }
-                                onClick={() => handleDecrement(item.id)}
+                                  onClick={() => handleDecrement(item.id)}
                                 />
                               </span>
                               <p className="number-cart">
@@ -435,7 +458,7 @@ const Navbar = () => {
                               <span className="addition-icon">
                                 <IoMdAddCircle
                                   size={30}
-                                 onClick={() => handleIncrement(item.id)}
+                                  onClick={() => handleIncrement(item.id)}
                                 />
                               </span>
 
@@ -468,8 +491,8 @@ const Navbar = () => {
                         </h5>
                       </div>
                       <br />
-                       <div className="">
-                       {/* <input id="input" />
+                      <div className="">
+                        {/* <input id="input" />
                        <div className="">
                         <Link to="/cartoffers">
                           <button className=" signin-btn w-100 fs-8 ms-5 apply-btn ">
@@ -478,26 +501,30 @@ const Navbar = () => {
                         </Link>
                       </div> */}
 
-<div class="row">
-    <div class="col ms-5">
-       <input id="input" className="w-100"
-       placeholder="Enter promo code here"
-       />
-    </div>
-    <div class="col">
-    <Link to="/cartoffers">
-                          <button className=" signin-btn  fs-8 ms-5 apply-btn w-75 ">
-                            Apply
-                          </button>
-                        </Link>
-    </div>
-  
-  </div>
-                       </div>
-                     
-
-
-                      
+                        <div class="row">
+                          <div class="col ms-5">
+                            <input
+                            required
+                              type="text"
+                              value={coupon_code}
+                              onChange={(e) => setcouon_code(e.target.value)}
+                              id="input"
+                              className="w-100"
+                              placeholder="Enter promo code here"
+                            />
+                          </div>
+                    
+                          <div class="col">
+                            {/* <Link to="/cartoffers"> */}
+                            <button
+                              onClick={(e) => handleApplycode(e)}
+                              className=" signin-btn  fs-8 ms-5 apply-btn w-75 ">
+                              Apply
+                            </button>
+                            {/* </Link> */}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -510,11 +537,13 @@ const Navbar = () => {
                       <strong className="price-item">{calculateTotal()}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                      Discount {newdis}%
-                      <span className="price-item"> - {calculateTotal() *newdis / 100 }</span> 
+                      Discount {storediscountvalue }%
+                      <span className="price-item">
+                        {" "}
+                        - {(calculateTotal() * storediscountvalue) / 100}
+                      </span>
                     </li>
 
-                   
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0 pb-0 ">
                       Tax
                     </li>
@@ -527,7 +556,11 @@ const Navbar = () => {
                           Payable amount
                         </strong>
                       </div>
-                      <span className="price-item"> { calculateTotal() - calculateTotal() *newdis / 100 }</span>
+                      <span className="price-item">
+                        {" "}
+                        {calculateTotal() -
+                          (calculateTotal() * storediscountvalue) / 100}
+                      </span>
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center ms-5">

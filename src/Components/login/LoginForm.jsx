@@ -31,6 +31,7 @@ const LoginForm = () => {
       const response = await Login("login", formData);
       const newresponse = response;
       const accessToken = localStorage.setItem("token", response.token);
+
       const idToken = localStorage.setItem(
         "userinfo",
         JSON.stringify(response.data)
@@ -42,9 +43,15 @@ const LoginForm = () => {
         setValidationErrors(newresponse.errors);
       }
 
-      if (newresponse.status == true) {
-        // window.alert(newresponse.message);
-        Swal.fire("Login successfully !");
+      if (newresponse.status == true) 
+      {
+        Swal.fire({
+          title: "Login Successfully !!!",
+          customClass: {
+            container: "custom-swal-button",
+            confirmButton: "custom-swal-confirm-button",
+          },
+        });
         nav("/");
       }
     } catch (error) {

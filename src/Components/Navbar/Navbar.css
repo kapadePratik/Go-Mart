@@ -27,16 +27,11 @@
 .navbar {
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 10px;
-  
-    
- 
+    position: fixed;
+    width: 100%;
+    z-index: 100;
 }
 
-.sticky { 
-  position: fixed; 
-  top: 0; 
-  width: 100%; 
-} 
 .location-input input {
     padding-left: 35px;
  }

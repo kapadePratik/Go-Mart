@@ -11,17 +11,26 @@ import rating from "../images/rating.png.png";
 import calender from "../images/calender.png.png";
 import calories from "../images/calories.png.png";
 import { apimethod, Addcart } from "../../utils/api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ItemsDescription = (prop) => {
-  const { navigate } = useLocation();
-
+  const [count, setCount] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const itemWeightString = JSON.parse(navigate.item_weight);
+  const state = useLocation();
+  const itemdata = state.state;
 
-  const [count, setCount] = useState(1);
+  // console.log(JSON.stringify(itemdata.item_id))
+
+  var itemWeightString = JSON.parse(itemdata.item_weight);
+
+  const [weight, setweight] = useState("");
+
+  const selecthandlechange = (e) => {
+    setweight(e.target.value);
+    console.log(weight);
+  };
 
   const increment = () => {
     setCount(count + 1);
@@ -33,20 +42,15 @@ const ItemsDescription = (prop) => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   const [formData, setFormData] = useState({
-    item_id: navigate.item_id,
+    item_id: itemdata.item_id,
     item_quantity: count,
-    item_name: navigate.item_name,
-    item_price: navigate.item_price,
-    item_description: navigate.item_description,
-    dis_item_price: navigate.dis_item_price,
-    item_expiry_date: navigate.item_expiry_date,
-    item_weight: navigate.item_weight,
+    item_name: itemdata.item_name,
+    item_price: itemdata.item_price,
+    item_description: itemdata.item_description,
+    dis_item_price: itemdata.dis_item_price,
+    item_expiry_date: itemdata.item_expiry_date,
+    item_weight: weight.length,
   });
 
   const handleSubmit = async (e) => {
@@ -63,19 +67,19 @@ const ItemsDescription = (prop) => {
           container: "custom-swal-button",
         },
       });
-      // window.alert("you dont have login");
     } else {
-      try {
-        const response = await apimethod("Addcart", formData);
-        const newresponse = response;
-        console.log(newresponse);
+      const response = await apimethod("Addcart", formData);
+      const newresponse = response;
+      console.log(newresponse);
 
-        if (newresponse.status == true) {
-          // window.alert(newresponse.message);
-          Swal.fire("Added in cart successfully!");
-        }
-      } catch (error) {
-        console.log(error);
+      if (newresponse.status == true) {
+        Swal.fire({
+          title: "Added in cart successfully!",
+          customClass: {
+            container: "custom-swal-button",
+            confirmButton: "custom-swal-confirm-button",
+          },
+        });
       }
     }
   };
@@ -95,14 +99,14 @@ const ItemsDescription = (prop) => {
               value="item_image"
               src={
                 "https://gomart.thecompletesoftech.in/uploads/" +
-                navigate.item_image
+                itemdata.item_image
               }
               width={500}
               height={500}
             />
 
             <div className="col-lg-10  item-description ">
-              <p className="  ms-5 mt-2">{navigate.item_description}</p>
+              <p className="  ms-5 mt-2">{itemdata.item_description}</p>
             </div>
             <div className="d-flex justify-content-center">
               <button
@@ -116,7 +120,7 @@ const ItemsDescription = (prop) => {
           <div className="col-lg-6">
             <div className="item-section">
               <span className="item-name" value="item_name">
-                {navigate.item_name}
+                {itemdata.item_name}
               </span>
               <div className="item-selection">
                 <div className="row mt-5">
@@ -156,7 +160,7 @@ const ItemsDescription = (prop) => {
                           </div>
                           <div className="col-lg-5">
                             <label className="green-color">
-                              {navigate.item_expiry_date}
+                              {itemdata.item_expiry_date}
                             </label>
                             <small className="grey-color ">Expiration</small>
                           </div>
@@ -182,7 +186,7 @@ const ItemsDescription = (prop) => {
                           </div>
                           <div className="col-lg-4">
                             <label className="green-color">
-                              {navigate.rating}
+                              {/* {rating} */}
                             </label>
                             <small className="grey-color">Reviews</small>
                           </div>
@@ -225,23 +229,22 @@ const ItemsDescription = (prop) => {
                 <div className="row">
                   <div className="col-lg-3">
                     <select
-                      value={formData.item_weight}
-                      onChange={handleChange}
+                      value={weight}
+                      onChange={(e) => selecthandlechange(e)}
                       className="form-select form-select-border-radius select-content"
                       aria-label=".form-select-lg example form-dropdown ">
-                      {itemWeightString.map((weight, index) => (
+                      {itemWeightString.map((obj, index) => (
                         <option
                           key={index}
-                          value={weight}
-                          className="dropdown-product  select-content">
-                          {weight}
+                          className="dropdown-product select-content">
+                          {obj}
                         </option>
                       ))}
                     </select>
                   </div>
                   <div className="col-lg-2">
                     <label className="select-content ">
-                      ${navigate.item_price}
+                      ${itemdata.item_price}
                     </label>
                   </div>
                 </div>

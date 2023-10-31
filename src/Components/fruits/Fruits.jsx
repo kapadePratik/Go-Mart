@@ -165,9 +165,9 @@ const Fruits = () => {
     setLoading(false);
   };
 
-  const handleLikeClick = (i) => {
+  const handleLikeClick = (item) => {
     var data = [...favlist];
-    data[i] = !favlist[i];
+    data[item] = !favlist[item];
     setFavList(data);
     setTimeout(() => {
       setIsLiked(false);
@@ -204,7 +204,7 @@ const Fruits = () => {
                 <div class="inner-wrapper">
                   {item.product.product.map((items, index) => (
                     <>
-                      <div class="card card-catogry mb-3 mt-2 ms-3">
+                      <div class="card card-catogry mb-3 mt-2 ms-3" key={index}>
                         <div class="inner-card">
                           <div class="img-wrapper">
                             <div className="category-img">
@@ -239,7 +239,11 @@ const Fruits = () => {
                               }}>
                               <Link
                                 to="/itemsdescription"
-                                navigate={items}
+                                state={items}
+                                // to={{
+                                //   pathname: "/itemsdescription",
+                                //   state: { data: data },
+                                // }}
                                 style={{
                                   textDecoration: "none",
                                   backgroundColor: "#23aa49",
@@ -265,10 +269,12 @@ const Fruits = () => {
                                 paddingBottom: "4%",
                               }}
                               className={likeClass}
-                              onClick={() => handleLikeClick(i)}>
-                              {favlist[i] == true ? (
+                              onClick={() => handleLikeClick(item)}>
+                              {favlist[item] == true ? (
                                 <AiFillHeart
-                                  onClick={() => handleLikeDislike(items)}
+                                  onClick={() =>
+                                    handleLikeDislike(items, index)
+                                  }
                                   size={35}
                                   className="heart-icon heart-desktopview"
                                   style={{ color: "red" }}
