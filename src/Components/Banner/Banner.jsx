@@ -27,7 +27,7 @@ const Banner = () => {
     fetchDataFromAPI();
   }, []);
   return (
-    <div className="container banner-position">
+    <div className="container banner-position mt-5">
       <div className="banner-item">
         <Swiper
           spaceBetween={15}

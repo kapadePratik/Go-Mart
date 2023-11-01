@@ -36,6 +36,7 @@ import Swal from "sweetalert2";
 
 const Navbar = () => {
   var btnst = true;
+
   const showsidebar = () => {
     if (btnst == true) {
       document.querySelector(".toggle i").classList.add("toggle");
@@ -51,17 +52,14 @@ const Navbar = () => {
   const [quantity, setQuantity] = useState([]);
   const [cart, setCart] = useState([]);
   const [change, setChange] = useState({});
-
   const [sidebar, setSidebar] = useState([]);
-
   const location = useLocation();
   const newdis = location.state;
 
   const logOut = () => {
-    
     const accessToken = localStorage.removeItem("token");
 
-    if (accessToken !=null) {
+    if (accessToken != null) {
       Swal.fire({
         title: "Do you want to logout?",
         showDenyButton: true,
@@ -142,14 +140,12 @@ const Navbar = () => {
     getcartrecord();
     setvalue();
     fetchIdByItemId();
-
     const initialCart = {};
     cart.forEach((product) => {
       initialCart[product.id] = 1;
     });
     setChange(initialCart);
   }, []);
-
 
   const handleIncrement = (productId) => {
     setChange((prevCart) => {
@@ -213,6 +209,9 @@ const Navbar = () => {
   const [coupon_code, setcouon_code] = useState();
   const [validationErrors, setValidationErrors] = useState({});
   const [storediscountvalue, setdiscountvalue] = useState(0);
+
+  const [updatedvalue, setUpdatedvalue] = useState({ items: [] });
+
   const nav = useNavigate();
 
   const handleApplycode = async (e) => {
@@ -224,7 +223,7 @@ const Navbar = () => {
     const response = await apimethod("applycouponcode", body);
     const newresponse = response;
     setdiscountvalue(response.data.discount);
-    setcouon_code('');
+    setcouon_code("");
     // console.log(response.data.discount);
 
     if (newresponse.status == false) {
@@ -237,8 +236,29 @@ const Navbar = () => {
     } else {
       Swal.fire("Not Applied !");
       nav("/");
-    
     }
+  };
+
+  const updateQuantityandprice = async (Id, newQuantity, item_id) => {
+    var body = {
+      id: Id,
+      item_quantity: newQuantity,
+      item_id: item_id,
+    };
+
+    const response = await apimethod("updateItemQuantity", body);
+    const newresponse = response;
+    if (newresponse.status == true) {
+      console.log(newresponse.message);
+    } else {
+      console.log(newresponse);
+    }
+
+  };
+
+  const updaterecord = async (e) => {
+    e.preventDefault();
+    console.log(updatedvalue);
   };
 
   return (
@@ -400,13 +420,20 @@ const Navbar = () => {
                         Shopping Card
                       </span>
                       <span class="mb-0 text-muted mt-3">
-                        <i
-                          class="fa-solid fa-xmark"
-                          style={{
-                            fontSize: "23px",
-                            cursor: "pointer",
-                          }}
-                          className="cross-mark"></i>
+                        {cart.length === 0 ? (
+                          <p className="data-notfoundsidebar">
+                            No data found <br />
+                            Please Add item to Favorite
+                          </p>
+                        ) : (
+                          <i
+                            class="fa-solid fa-xmark"
+                            style={{
+                              fontSize: "23px",
+                              cursor: "pointer",
+                            }}
+                            className="cross-mark"></i>
+                        )}
                       </span>
                     </div>
                     <hr class="my-2" />
@@ -449,7 +476,14 @@ const Navbar = () => {
                                       ? "#23AA49"
                                       : "#DADADA"
                                   }
-                                  onClick={() => handleDecrement(item.id)}
+                                  onClick={(e) => {
+                                    handleDecrement(item.id);
+                                    updateQuantityandprice(
+                                      item.id,
+                                      change[index] || 1,
+                                      item.item_id
+                                    );
+                                  }}
                                 />
                               </span>
                               <p className="number-cart">
@@ -458,21 +492,19 @@ const Navbar = () => {
                               <span className="addition-icon">
                                 <IoMdAddCircle
                                   size={30}
-                                  onClick={() => handleIncrement(item.id)}
+                                  onClick={(e) => {
+                                    handleIncrement(item.id);
+                                    updateQuantityandprice(
+                                      item.id,
+                                      change[index] || 1,
+                                      item.item_id
+                                    );
+                                  }}
                                 />
                               </span>
-
-                              {/* <button onClick={() => handleDecrement(item.id)}>
-                                -
-                              </button>
-                              {change[item.id] || 1}
-                              <button onClick={() => handleIncrement(item.id)}>
-                                +
-                              </button> */}
                             </div>
                           </div>
                         </div>
-
                         <hr class="my-4" />
                       </>
                     ))}
@@ -504,7 +536,7 @@ const Navbar = () => {
                         <div class="row">
                           <div class="col ms-5">
                             <input
-                            required
+                              required
                               type="text"
                               value={coupon_code}
                               onChange={(e) => setcouon_code(e.target.value)}
@@ -513,7 +545,7 @@ const Navbar = () => {
                               placeholder="Enter promo code here"
                             />
                           </div>
-                    
+
                           <div class="col">
                             {/* <Link to="/cartoffers"> */}
                             <button
@@ -537,7 +569,7 @@ const Navbar = () => {
                       <strong className="price-item">{calculateTotal()}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                      Discount {storediscountvalue }%
+                      Discount {storediscountvalue}%
                       <span className="price-item">
                         {" "}
                         - {(calculateTotal() * storediscountvalue) / 100}
@@ -564,8 +596,10 @@ const Navbar = () => {
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center ms-5">
-                    <Link to="/address">
-                      <button className="addcart-btn signin-btn w-100 mt-3 ">
+                    <Link to="">
+                      <button
+                        className="addcart-btn signin-btn w-100 mt-3"
+                        onClick={(e) => updaterecord(e)}>
                         CHECKOUT
                       </button>
                     </Link>

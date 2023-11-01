@@ -11,6 +11,7 @@ import Footer from "../footer/Footer";
 import { fetchData } from "../../utils/api";
 import HashLoader from "../Loader/HashLoader";
 
+
 const Main = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

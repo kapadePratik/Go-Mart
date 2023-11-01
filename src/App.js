@@ -27,6 +27,8 @@ import UserProfile from "./Components/userProfile/UserProfile";
 import Favorite from "./Components/favorite/Favorite";
 import OrderStatus from "./Components/orderStatus/OrderStatus";
 import OrderList from "./Components/OrderList/OrderList";
+// import PaymentDetail from "../paymentdetail/PaymentDetail";
+import PaymentDetail from "../src/Components/paymentdetail/PaymentDetail";
 import Swal from 'sweetalert2';
 import {
   BrowserRouter as Router,
@@ -102,6 +104,8 @@ function App()
           <Route exact path="/orderstatus" element={<OrderStatus />}></Route>
           <Route exact path="/orderlist" element={<OrderList />}></Route>
           <Route exact path="/navbar" element={<Navbar />}></Route>
+          <Route exact path="/paymentdetail" element={<PaymentDetail />}></Route>
+     
      
     
         </Routes>

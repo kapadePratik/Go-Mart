@@ -407,3 +407,14 @@ textarea:valid ~ label {
   border-color: #23aa49;
  
 }
+
+.input-radio.on:checked {
+  box-shadow: 0px 0px 0px 4px #00eb27;
+  background-color: #51ff6e;
+}
+/* .input-radio.off:checked {
+  box-shadow: 0px 0px 0px 4px #00eb27;
+  background-color: #51ff6e;
+} */
+
+

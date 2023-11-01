@@ -414,4 +414,13 @@
     width: 150px;
   }
   
-  
+  .data-notfoundsidebar{
+    font-size: 18px;
+    font-weight: 600;
+    color: #7c7c7c;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+
+  }
